@@ -1,28 +1,49 @@
 import pygame
 from pygame.display import flip
+
+# Functie om de surface te wissen
+def clear_surface(surface):
+    surface.fill((0, 0, 0))
+
+
+
+class Avatar:
+    def __init__(self, x, y, image_path):
+        self.position = [x, y]  # private veld voor positie
+        self.image = pygame.image.load(image_path).convert_alpha()  # laad afbeelding
+
+    # tekent avatar op oppervlakt
+    def render(self, surface):
+        surface.blit(self.image, self.position) 
+
+
 class State:
     def __init__(self):
-    
-        self.circle_x = 0
+        self.avatar = Avatar(512, 384, "Chicken.png")
+        self.speed = 200
 
-    def update(self):
-        
-        self.circle_x += 1
+
+    def update(self, elapsed_seconds, keys):
+        # Beweeg de cirkel afhankelijk van welke pijltjes ingedrukt zijn
+        if keys[pygame.K_RIGHT]:
+            self.avatar.position[0] += self.speed * elapsed_seconds
+        if keys[pygame.K_LEFT]:
+            self.avatar.position[0] -= self.speed * elapsed_seconds
+        if keys[pygame.K_DOWN]:
+            self.avatar.position[1] += self.speed * elapsed_seconds
+        if keys[pygame.K_UP]:
+            self.avatar.position[1] -= self.speed * elapsed_seconds
+
+        # Houd de avatar binnen het scherm
+        self.avatar.position[0] = max(0, min(1024 - self.avatar.image.get_width(), self.avatar.position[0]))
+        self.avatar.position[1] = max(0, min(768 - self.avatar.image.get_height(), self.avatar.position[1]))
 
     def render(self, surface):
-        # Clear the screen
-        surface.fill((0, 0, 0))
+        # Wis de surface aan het begin van elke frame
+        clear_surface(surface)
 
-        # Draw the circle at the current x-coordinate
-        pygame.draw.circle(
-            surface,
-            (255, 0, 0),
-            (self.circle_x, 384),
-            50
-        )
-
-        # Copy back buffer to front buffer
-        flip()
+        self.avatar.render(surface)
+        pygame.display.flip()
 
 
 def create_main_surface():
@@ -30,28 +51,29 @@ def create_main_surface():
     return pygame.display.set_mode(screen_size)
 
 
-
 def main():
     pygame.init()
     surface = create_main_surface()
-
     state = State()  # startpositie van de cirkel
+    # Maak een Clock object om de FPS te regelen
+    clock = pygame.time.Clock()
 
     running = True
+
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
-        
-        state.update()
 
+        # Key states ophalen
+        keys = pygame.key.get_pressed()
+
+        elapsed_seconds = clock.tick() / 1000.0  # geen FPS-limiet
+        state.update(elapsed_seconds, keys)              # update met tijd
         state.render(surface)
 
-       
+
 
 
 main()
-
-
-
