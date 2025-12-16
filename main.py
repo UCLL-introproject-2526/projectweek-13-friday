@@ -67,7 +67,7 @@ while running:
     # ---- DRAW ----
     screen.blit(current_room.image, (0, 0))
     player.render(screen)
-
+    # screen.fill((255,255,255))
     pygame.display.flip()
 
 pygame.quit()
