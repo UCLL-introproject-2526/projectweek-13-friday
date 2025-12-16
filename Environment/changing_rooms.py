@@ -12,13 +12,13 @@ class Room:
 
 def create_rooms(screen_width, screen_height):
     room_images = [
-        "Rooms/office.png",      # index 0
-        "Rooms/hallway.png",     # index 1
-        "Rooms/classroom.png",   # index 2    
-        "Rooms/hallway.png",     # index 3    
-        "Rooms/playground.png",  # index 4    
-        "Rooms/school_exit.png", # index 5    
-        "Rooms/lab.png",         # index 6    
+        ("Office", "Rooms/office.png"),         # index 0
+        ("Hallway", "Rooms/hallway.png"),       # index 1
+        ("Classroom", "Rooms/classroom.png"),   # index 2    
+        ("Hallway", "Rooms/hallway.png"),       # index 3    
+        ("Playground", "Rooms/playground.png"), # index 4    
+        ("School Exit", "Rooms/school_exit.png"), # index 5    
+        ("Laboratory", "Rooms/lab.png"),        # index 6    
     ]
 
     rooms = {}
