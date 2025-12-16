@@ -33,9 +33,16 @@ from avatar_movement import Avatar
 
 pygame.init()
 
+
+
+
 WIDTH, HEIGHT = 1280, 720
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
+banana_image = pygame.image.load("banaan.png").convert_alpha()
+banana_image = pygame.transform.scale(banana_image, (128, 128))
+banana_pos = (WIDTH // 2 - 64, HEIGHT // 2 - 64)
+
 
 # Rooms
 rooms = create_rooms()
@@ -67,6 +74,12 @@ while running:
     # ---- DRAW ----
     screen.blit(current_room.image, (0, 0))
     player.render(screen)
+    # ---- DRAW ----
+    screen.blit(current_room.image, (0, 0))
+
+    screen.blit(banana_image, banana_pos)  # <-- BANAAN
+
+
 
     pygame.display.flip()
 
