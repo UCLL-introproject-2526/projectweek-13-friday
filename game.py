@@ -67,17 +67,40 @@ class Game:
         # self.current_room = self.rooms[idx]
         
 
-        # -------------------- vorige implementatie --------------------------
-        # Controleer of de speler buiten het scherm gaat en switch van kamer 
-        # Naar links
-        if self.player.position[0] + self.player.image.get_width() < 0 and self.current_room.left is not None:
-            self.current_room = self.rooms[self.current_room.left]
-            self.player.position[0] = self.WIDTH
+    # -------------------- vorige implementatie --------------------------
 
-        # Naar rechts
-        if self.player.position[0] > self.WIDTH and self.current_room.right is not None:
-            self.current_room = self.rooms[self.current_room.right]
-            self.player.position[0] = -self.player.image.get_width()
+        # # Controleer of de speler buiten het scherm gaat en switch van kamer 
+        # # Naar links
+        # if self.player.position[0] + self.player.image.get_width() < 0 and self.current_room.left is not None:
+        #     self.current_room = self.rooms[self.current_room.left]
+        #     self.player.position[0] = self.WIDTH
+
+        # # Naar rechts
+        # if self.player.position[0] > self.WIDTH and self.current_room.right is not None:
+        #     self.current_room = self.rooms[self.current_room.right]
+        #     self.player.position[0] = -self.player.image.get_width()
+
+    # ---------------------------------------------------------------------------------------------------------
+
+        player_width = self.player.image.get_width()
+
+        # LINKS
+        if self.player.position[0] < 0:
+            if self.current_room_index > 0:
+                self.current_room_index -= 1
+                self.current_room = self.rooms[self.current_room_index]
+                self.player.position[0] = self.WIDTH - player_width
+            else:
+                self.player.position[0] = 0
+
+        # RECHTS
+        elif self.player.position[0] + player_width > self.WIDTH:
+            if self.current_room_index < len(self.rooms) - 1:
+                self.current_room_index += 1
+                self.current_room = self.rooms[self.current_room_index]
+                self.player.position[0] = 0
+            else:
+                self.player.position[0] = self.WIDTH - player_width    
 
     def update(self, elapsed_seconds):
         # Update speler en kamer 
