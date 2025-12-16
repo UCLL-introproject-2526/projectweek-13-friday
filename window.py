@@ -22,7 +22,6 @@ class State:
         self.avatar = Avatar(512, 384, "Chicken.png")
         self.speed = 200
 
-
     def update(self, elapsed_seconds, keys):
         # Beweeg de cirkel afhankelijk van welke pijltjes ingedrukt zijn
         if keys[pygame.K_RIGHT]:
