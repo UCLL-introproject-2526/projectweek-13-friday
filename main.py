@@ -4,7 +4,7 @@ from Environment.changing_rooms import create_rooms
 
 pygame.init()
 
-# game window.. info..
+# game window set-up
 WIDTH, HEIGHT = 1280, 720
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()  # frame snelheid..? idk nog uit te zoeken.
