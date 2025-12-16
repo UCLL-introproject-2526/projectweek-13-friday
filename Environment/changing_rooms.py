@@ -12,7 +12,7 @@ class Room:
 
 def create_rooms():
     # lijst in volgorde van hoedat de kamers staan..
-    []
+    # []
 
     room_images = [
         "Rooms/classroom.png",   # index 0
