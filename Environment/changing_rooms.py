@@ -1,25 +1,15 @@
-import pygame
+import pygame 
 from pathlib import Path
 
-pygame.init()
-screen = pygame.display.set_mode((1280, 720))
+#Global path variable 
+BASE_DIR = Path(__file__).resolve().parent.parent
+ROOMS_DIR = BASE_DIR / "Rooms"
 
+#Afbeeldingen inladen in lijst (preparation)
 rooms = []
-rooms_path = Path(__file__).parent.parent / "Rooms"
 
-for img_path in rooms_path.glob("*.png"):
-    rooms.append(pygame.image.load(str(img_path)).convert())
-
-clock = pygame.time.Clock()
-running = True
-
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-    screen.blit(rooms[0], (0, 0))
-    pygame.display.flip()
-    clock.tick(60)
-
-pygame.quit()
+for img_path in sorted(ROOMS_DIR.glob("*.png")):
+    image = pygame.image.load(img_path).convert_alpha()
+    rooms.append(image)
+    
+print(len(rooms))
