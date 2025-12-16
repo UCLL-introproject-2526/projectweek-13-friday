@@ -1,6 +1,9 @@
 import pygame
 from Environment.changing_rooms import create_rooms
 from avatar_movement import Avatar
+from ingredient import Ingredient, Mixingpot, IngredientSprite, CandySprite, recipes, ingredient_sprites
+
+
 
 class Game:
     def __init__(self):
@@ -25,10 +28,28 @@ class Game:
         # game loop
         self.running = True
 
+        # ingredienten
+        self.mixing_pot = Mixingpot()
+        self.ingredient_sprites = ingredient_sprites  # lijst van alle IngredientSprite objecten
+        self.current_candy_sprite = None
+
+
     def handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
+
+        #controleert of speler met muis klikt
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()  # haalt postie muis op, zo weten we welk ingredient is geklikt
+
+                for sprite in self.ingredient_sprites:     # kijken op welke sprite is geklikt 
+                    if sprite.is_clicked(mouse_pos):        # kijken of muis positie overeen komt
+                        candy = self.mixing_pot.add_ingredient(sprite.ingredient)   #stuurt ingredient naar mixing pot
+                        if candy:
+                            self.current_candy_sprite = CandySprite(candy, (640, 360))
+                            # Voeg candy toe aan player inventory
+                            self.player.inventory.add_to_inventory(candy, 1)
 
     def switch_rooms(self):
         # moved = False
@@ -112,6 +133,16 @@ class Game:
         # Teken huidige kamer en speler
         self.screen.blit(self.current_room.image, (0, 0))
         self.player.render(self.screen)
+        
+
+        # teken alle ingrediënten
+        for sprite in self.ingredient_sprites:
+            sprite.draw(self.screen)
+
+        # teken gemixt snoepje (als er een is)
+        if self.current_candy_sprite:
+            self.current_candy_sprite.draw(self.screen)
+
         pygame.display.flip()
 
     def run(self):
