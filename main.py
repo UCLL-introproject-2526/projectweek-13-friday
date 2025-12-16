@@ -40,8 +40,8 @@ WIDTH, HEIGHT = 1280, 720
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 banana_image = pygame.image.load("banaan.png").convert_alpha()
-banana_image = pygame.transform.scale(banana_image, (128, 128))
-banana_pos = (WIDTH // 2 - 64, HEIGHT // 2 - 64)
+banana_image = pygame.transform.scale(banana_image, (256, 256))
+banana_pos = (WIDTH // 2 - 128, HEIGHT // 2 - 128)
 
 
 # Rooms
