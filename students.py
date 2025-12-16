@@ -6,7 +6,7 @@ class Student:
         self.name = name
         self.favourite_sweets = []
         self.order = {}
-    
+
 #add an order to put in the demand dict,  key: order , value candy_type, amount
 #randomize a type from the recipe.txt file and randomze an amount from 1-10
 #check if it can acces the recipe file -> it's in a folder
@@ -31,9 +31,3 @@ class Student:
 #when we reach higher levels, students may have more orders
     # def select_order(self,):
     #     pass
-
-
-
-student_mark = Student("Mark")
-student_mark.add_order()
-print(student_mark)
