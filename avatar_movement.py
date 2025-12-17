@@ -77,10 +77,11 @@
 import pygame
 
 class Avatar:
-    def __init__(self, x, y, image_path):
+    def __init__(self, x, image_path, player):
         self.position = [x, 550]  # CHANGE BASED ON LOCATION Y PATH
         self.image = pygame.image.load(image_path).convert_alpha()
-        self.speed = 200
+        self.speed = 1000
+        self.player = player
 
     def update(self, elapsed_seconds, keys):
         if keys[pygame.K_RIGHT]:
