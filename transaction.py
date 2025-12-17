@@ -10,7 +10,7 @@ class Transaction:
 
 #assign spawnpoint
     def set_spawn_location(self):
-        with open('locations.txt', 'r', encoding= 'utf-8') as file:
+        with open('delivery_texts/locations.txt', 'r', encoding= 'utf-8') as file:
             rooms = file.readlines()
             room_list = []
             for room in rooms:
