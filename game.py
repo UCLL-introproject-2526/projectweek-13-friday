@@ -1,7 +1,7 @@
 import pygame
 from Environment.changing_rooms import create_rooms
 from avatar_movement import Avatar
-from ingredient import Ingredient, Mixingpot, IngredientSprite, CandySprite, recipes, ingredient_sprites
+from ingredient import Ingredient, Mixingpot, IngredientSprite, CandySprite, recipes
 
 
 
@@ -30,7 +30,15 @@ class Game:
 
         # ingredienten
         self.mixing_pot = Mixingpot()
-        self.ingredient_sprites = ingredient_sprites  # lijst van alle IngredientSprite objecten
+        self.ingredient_sprites = self.ingredient_sprites = [
+    IngredientSprite(Ingredient("rood","kleur"), "ingredient_assets/kleur/snoep_red.png", (800,150)),
+    IngredientSprite(Ingredient("geel","kleur"), "ingredient_assets/kleur/snoep_yellow.png", (950,150)),
+    IngredientSprite(Ingredient("blauw","kleur"), "ingredient_assets/kleur/snoep_blue.png", (1100,150)),
+
+    IngredientSprite(Ingredient("appel","smaak"), "ingredient_assets/smaak/appel.png", (800,275)),
+    IngredientSprite(Ingredient("banaan","smaak"), "ingredient_assets/smaak/banaan.png", (950,275)),
+    IngredientSprite(Ingredient("druif","smaak"), "ingredient_assets/smaak/grape.png", (1100,275))
+]  # lijst van alle IngredientSprite objecten
         self.current_candy_sprite = None
 
 
@@ -133,9 +141,15 @@ class Game:
         # Teken huidige kamer en speler
         self.screen.blit(self.current_room.image, (0, 0))
         self.player.render(self.screen)
-        
+            
+        # --- Teken box achter ingredienten ---
+        # Bepaal de grootte van de box (past bij je sprites)
+        box_rect = pygame.Rect(780, 130, 450, 320)  # (x, y, width, height)
+        pygame.draw.rect(self.screen, (50, 50, 50), box_rect)  # donkergrijze box
+        pygame.draw.rect(self.screen, (255, 255, 255), box_rect, 2)  # optioneel witte rand
 
-        # teken alle ingrediënten
+
+         # teken alle ingrediënten
         for sprite in self.ingredient_sprites:
             sprite.draw(self.screen)
 
@@ -154,3 +168,8 @@ class Game:
             self.draw()
 
         pygame.quit()
+
+
+if __name__ == "__main__":
+    game = Game()
+    game.run()

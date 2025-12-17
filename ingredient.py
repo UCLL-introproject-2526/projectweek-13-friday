@@ -62,15 +62,15 @@ class Mixingpot:
 
 
 # ingredient object aanmaken : kleuren
-rood = Ingredient("rood", "kleur")
-geel = Ingredient("geel", "kleur")
-blauw = Ingredient("blauw", "kleur")
+# rood = Ingredient("rood", "kleur")
+# geel = Ingredient("geel", "kleur")
+# blauw = Ingredient("blauw", "kleur")
 
 
-# ingredient objecten aanmaken : smaken
-appel = Ingredient("appel", "smaak")
-banaan = Ingredient("banaan", "smaak")
-druif = Ingredient("druif", "smaak")
+# # ingredient objecten aanmaken : smaken
+# appel = Ingredient("appel", "smaak")
+# banaan = Ingredient("banaan", "smaak")
+# druif = Ingredient("druif", "smaak")
 #---------------------------------------------------------------------------------------------------------------
 
 
@@ -78,7 +78,9 @@ druif = Ingredient("druif", "smaak")
 class IngredientSprite:
     def __init__(self, ingredient, image_path, pos):
         self.ingredient = ingredient
-        self.image = pygame.image.load(image_path).convert_alpha()
+        # self.image = pygame.image.load(image_path).convert_alpha() 
+        self.image = pygame.transform.scale(pygame.image.load(image_path).convert_alpha(), (128, 128))
+
         self.rect = self.image.get_rect(topleft=pos)
 
     def draw(self, screen):
@@ -87,47 +89,48 @@ class IngredientSprite:
     def is_clicked(self, mouse_pos):
         return self.rect.collidepoint(mouse_pos)
 
-# sprite objecten aanmaken
-rood_sprite = IngredientSprite(rood, "ingredient_assets/kleur/snoep_red.png", (100, 500))
-geel_sprite = IngredientSprite(geel, "ingredient_assets/kleur/snoep_yellow.png", (200, 500))
-blauw_sprite = IngredientSprite(blauw, "ingredient_assets/kleur/snoep_blue.png", (300, 500))
+# # sprite objecten aanmaken
+# rood_sprite = IngredientSprite(rood, "ingredient_assets/kleur/snoep_red.png", (100, 500))
+# geel_sprite = IngredientSprite(geel, "ingredient_assets/kleur/snoep_yellow.png", (200, 500))
+# blauw_sprite = IngredientSprite(blauw, "ingredient_assets/kleur/snoep_blue.png", (300, 500))
 
 
-appel_sprite = IngredientSprite(appel, "ingredient_assets/smaak/appel.png", (600, 500))
-banaan_sprite = IngredientSprite(banaan, "ingredient_assets/smaak/banaan.png", (700, 500))
-druif_sprite = IngredientSprite(druif, "ingredient_assets/smaak/druif.png", (800, 500))
+# appel_sprite = IngredientSprite(appel, "ingredient_assets/smaak/appel.png", (600, 500))
+# banaan_sprite = IngredientSprite(banaan, "ingredient_assets/smaak/banaan.png", (700, 500))
+# druif_sprite = IngredientSprite(druif, "ingredient_assets/smaak/druif.png", (800, 500))
 
 
-# lijst met sprites:
-ingredient_sprites = [
-    rood_sprite, geel_sprite, blauw_sprite,
-    appel_sprite, banaan_sprite, druif_sprite
-]
+# # lijst met sprites:
+# ingredient_sprites = [
+#     rood_sprite, geel_sprite, blauw_sprite,
+#     appel_sprite, banaan_sprite, druif_sprite
+# ]
 
-# afbeeldingen koppelen aan juiste snoep recept
+# # afbeeldingen koppelen aan juiste snoep recept
 
 candy_images = {
     # Rood
-    "Rode appel snoep": "ingredient_assets/snoep/geel_banaan.png",
-    "Rode banaan snoep": "ingredient_assets/snoep/geel_banaan.png",
-    "Rode druif snoep": "ingredient_assets/snoep/geel_banaan.png",
+    "Rode appel snoep": "ingredient_assets/snoep/rood_appel.png",
+    "Rode banaan snoep": "ingredient_assets/snoep/rood_banaan.png",
+    "Rode druif snoep": "ingredient_assets/snoep/rood_grape.png",
 
     # Geel
-    "Gele appel snoep": "ingredient_assets/snoep/geel_banaan.png",
+    "Gele appel snoep": "ingredient_assets/snoep/geel_appel.png",
     "Gele banaan snoep": "ingredient_assets/snoep/geel_banaan.png",
-    "Gele druif snoep": "ingredient_assets/snoep/geel_banaan.png",
+    "Gele druif snoep": "ingredient_assets/snoep/geel_grape.png",
 
     # Blauw
-    "Blauwe appel snoep": "ingredient_assets/snoep/geel_banaan.png",
-    "Blauwe banaan snoep": "ingredient_assets/snoep/geel_banaan.png",
-    "Blauwe druif snoep": "ingredient_assets/snoep/geel_banaan.png",
+    "Blauwe appel snoep": "ingredient_assets/snoep/blauw_appel.png",
+    "Blauwe banaan snoep": "ingredient_assets/snoep/blauw_banaan.png",
+    "Blauwe druif snoep": "ingredient_assets/snoep/blauw_grape.png",
 }
 
 
 # zichtbaar snoepje op scherm
 class CandySprite:
     def __init__(self, candy_name, pos):
-        self.image = pygame.image.load(candy_images[candy_name]).convert_alpha()
+        # self.image = pygame.image.load(candy_images[candy_name]).convert_alpha()
+        self.image = pygame.transform.scale(pygame.image.load(candy_images[candy_name]).convert_alpha(), (128, 128))
         self.rect = self.image.get_rect(center=pos)
 
     def draw(self, screen):
