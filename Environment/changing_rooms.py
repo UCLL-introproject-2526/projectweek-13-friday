@@ -23,7 +23,7 @@ def create_rooms(screen_width, screen_height):
 
     rooms = {}
 
-    for index, (room_name, image_path) in enumerate(room_images):
+    for index, image_path in enumerate(room_images):
         rooms[index] = Room(index, image_path, screen_width, screen_height)
 
     # Assign neighbors
