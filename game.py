@@ -1,6 +1,7 @@
 import pygame
 from Environment.changing_rooms import create_rooms
 from avatar_movement import Avatar
+from battle_sequence.battle import Battle
 
 class Game:
     def __init__(self):
@@ -105,6 +106,14 @@ class Game:
     def update(self, elapsed_seconds):
         # Update speler en kamer 
         keys = pygame.key.get_pressed()
+
+        # ---- BATTLE TRIGGER (TIJDELIJK) ----
+        if keys[pygame.K_b]:
+            from battle_sequence.battle import Battle
+            battle = Battle(self.screen)
+            battle.run()
+        # -----------------------------------------------
+
         self.player.update(elapsed_seconds, keys)
         self.switch_rooms()
 
