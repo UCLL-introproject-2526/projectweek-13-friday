@@ -1,7 +1,7 @@
 import pygame
 from Environment.changing_rooms import create_rooms
 from avatar_movement import Avatar
-from ingredient import Ingredient, Mixingpot, IngredientSprite, CandySprite, recipes
+from ingredient import Ingredient, Mixingpot, IngredientSprite, CandySprite, recipes, candy_images
 from player import *
 
 
@@ -24,6 +24,7 @@ class Game:
         self.current_room = self.rooms[self.current_room_index]
 
         # player
+
         self.player_inventory = Inventory()
         self.player = Player("Speler1", self.player_inventory)
         self.player_avatar = Avatar(600, "Chicken.png", self.player)
@@ -33,7 +34,6 @@ class Game:
 
         # ingredienten
         self.mixing_pot = Mixingpot()
-        
         self.ingredient_sprites = self.ingredient_sprites = [
     IngredientSprite(Ingredient("rood","kleur"), "ingredient_assets/kleur/snoep_red.png", (800,150)),
     IngredientSprite(Ingredient("geel","kleur"), "ingredient_assets/kleur/snoep_yellow.png", (950,150)),
@@ -42,8 +42,22 @@ class Game:
     IngredientSprite(Ingredient("appel","smaak"), "ingredient_assets/smaak/appel.png", (800,275)),
     IngredientSprite(Ingredient("banaan","smaak"), "ingredient_assets/smaak/banaan.png", (950,275)),
     IngredientSprite(Ingredient("druif","smaak"), "ingredient_assets/smaak/grape.png", (1100,275))
-]   # lijst van alle IngredientSprite objecten
+    ]
+       # lijst van alle IngredientSprite objecten
         self.current_candy_sprite = None
+
+
+        self.inventory_slots = [
+    {"name": None, "count": 0},
+    {"name": None, "count": 0},
+    {"name": None, "count": 0},
+    {"name": None, "count": 0},
+    {"name": None, "count": 0},
+    {"name": None, "count": 0},
+    {"name": None, "count": 0},
+    {"name": None, "count": 0},
+    {"name": None, "count": 0}
+]
 
         
 
@@ -64,9 +78,22 @@ class Game:
                         candy = self.mixing_pot.add_ingredient(sprite.ingredient)   #stuurt ingredient naar mixing pot
                         if candy:
                             self.current_candy_sprite = CandySprite(candy, (640, 360))
+                             # 1️⃣ Eerst kijken: bestaat dit snoepje al?
+                            for slot in self.inventory_slots:
+                                if slot["name"] == candy:
+                                    slot["count"] += 1
+                                    return  # stop hier → klaar
+                            
+                               # 2️⃣ Anders: eerste lege slot zoeken
+                            for slot in self.inventory_slots:
+                                if slot["name"] is None:
+                                    slot["name"] = candy
+                                    slot["count"] = 1
+                                    return
                             # Voeg candy toe aan player inventory
-                            #voeg de het toe in de juiste slot
                             self.player.current_inventory.add_to_inventory(candy, 1)
+
+
 
     def switch_rooms(self):
         # moved = False
@@ -150,12 +177,12 @@ class Game:
         # Teken huidige kamer en speler
         self.screen.blit(self.current_room.image, (0, 0))
         self.player_avatar.render(self.screen)
-
+            
+        # --- Teken box achter ingredienten ---
         # Bepaal de grootte van de box (past bij je sprites)
-        if self.current_room == self.rooms[6]:
-            box_rect = pygame.Rect(780, 130, 450, 320)  # (x, y, width, height)
-            pygame.draw.rect(self.screen, (50, 50, 50), box_rect)  # donkergrijze box
-            pygame.draw.rect(self.screen, (255, 255, 255), box_rect, 2)  # optioneel witte rand
+        box_rect = pygame.Rect(780, 130, 450, 320)  # (x, y, width, height)
+        pygame.draw.rect(self.screen, (50, 50, 50), box_rect)  # donkergrijze box
+        pygame.draw.rect(self.screen, (255, 255, 255), box_rect, 2)  # optioneel witte rand
 
         inv_rect = pygame.Rect(10, 10, 675, 75)  # (x, y, width, height)
         pygame.draw.rect(self.screen, (50, 50, 50), inv_rect)  # donkergrijze box
@@ -197,12 +224,48 @@ class Game:
         pygame.draw.rect(self.screen, (150, 150, 150), inv_item9_rect)  # donkergrijze box
         pygame.draw.rect(self.screen, (255, 255, 255), inv_item9_rect, 2)  # optioneel witte rand
 
-        self.slots = [inv_item1_rect, inv_item2_rect, inv_item3_rect, inv_item4_rect, inv_item5_rect, inv_item6_rect, inv_item7_rect, inv_item8_rect, inv_item9_rect]   
-        # --- Teken box achter ingredienten ---
+
+        inventory_rects = [
+    inv_item1_rect,
+    inv_item2_rect,
+    inv_item3_rect,
+    inv_item4_rect,
+    inv_item5_rect,
+    inv_item6_rect,
+    inv_item7_rect,
+    inv_item8_rect,
+    inv_item9_rect,
+]
+        
+        font = pygame.font.Font(None, 28)
+
+        for i in range(len(self.inventory_slots)):  
+            slot = self.inventory_slots[i]
+
+            if slot["name"] is not None:
+                rect = inventory_rects[i]
+
+                # snoep-afbeelding
+                image_path = candy_images[slot["name"]]
+                image = pygame.image.load(image_path).convert_alpha()
+                image = pygame.transform.scale(image, (64, 64))
+
+                self.screen.blit(
+                    image,
+                    (rect.x + 5, rect.y + 5)
+                )
+
+                # teller``
+                if slot["count"] > 1:
+                    text = font.render(str(slot["count"]), True, (255, 255, 255))
+                    self.screen.blit(
+                        text,
+                        (rect.right - 20, rect.bottom - 20)
+                    )
+
          # teken alle ingrediënten
-        if self.current_room == self.rooms[6]:
-            for sprite in self.ingredient_sprites:
-                sprite.draw(self.screen)
+        for sprite in self.ingredient_sprites:
+            sprite.draw(self.screen)
 
         # teken gemixt snoepje (als er een is)
         if self.current_candy_sprite:
