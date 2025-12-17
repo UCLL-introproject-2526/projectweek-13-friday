@@ -45,6 +45,7 @@ class Mixingpot:
     
 
     # functie wordt aangeroepen als er 2 ingredienten zijn gekozen
+
     def mix(self):
         key = (self.kleur, self.smaak)     # maakt de key
 
@@ -130,7 +131,7 @@ candy_images = {
 class CandySprite:
     def __init__(self, candy_name, pos):
         # self.image = pygame.image.load(candy_images[candy_name]).convert_alpha()
-        self.image = pygame.transform.scale(pygame.image.load(candy_images[candy_name]).convert_alpha(), (128, 128))
+        self.image = pygame.transform.scale(pygame.image.load(candy_images[candy_name]).convert_alpha(), (82, 82))
         self.rect = self.image.get_rect(center=pos)
 
     def draw(self, screen):

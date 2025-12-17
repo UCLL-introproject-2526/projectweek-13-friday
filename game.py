@@ -2,6 +2,7 @@ import pygame
 from Environment.changing_rooms import create_rooms
 from avatar_movement import Avatar
 from ingredient import Ingredient, Mixingpot, IngredientSprite, CandySprite, recipes
+from player import *
 
 
 
@@ -23,7 +24,10 @@ class Game:
         self.current_room = self.rooms[self.current_room_index]
 
         # player
-        self.player = Avatar(600, 400, "Chicken.png")
+
+        self.player_inventory = Inventory()
+        self.player = Player("Speler1", self.player_inventory)
+        self.player_avatar = Avatar(600, "Chicken.png", self.player)
 
         # game loop
         self.running = True
@@ -38,8 +42,12 @@ class Game:
     IngredientSprite(Ingredient("appel","smaak"), "ingredient_assets/smaak/appel.png", (800,275)),
     IngredientSprite(Ingredient("banaan","smaak"), "ingredient_assets/smaak/banaan.png", (950,275)),
     IngredientSprite(Ingredient("druif","smaak"), "ingredient_assets/smaak/grape.png", (1100,275))
-]  # lijst van alle IngredientSprite objecten
+]   # lijst van alle IngredientSprite objecten
         self.current_candy_sprite = None
+
+        
+
+
 
 
     def handle_events(self):
@@ -57,7 +65,7 @@ class Game:
                         if candy:
                             self.current_candy_sprite = CandySprite(candy, (640, 360))
                             # Voeg candy toe aan player inventory
-                            self.player.inventory.add_to_inventory(candy, 1)
+                            self.player.current_inventory.add_to_inventory(candy, 1)
 
     def switch_rooms(self):
         # moved = False
@@ -111,36 +119,36 @@ class Game:
 
     # ---------------------------------------------------------------------------------------------------------
 
-        player_width = self.player.image.get_width()
+        player_width = self.player_avatar.image.get_width()
 
         # LINKS
-        if self.player.position[0] < 0:
+        if self.player_avatar.position[0] < 0:
             if self.current_room_index > 0:
                 self.current_room_index -= 1
                 self.current_room = self.rooms[self.current_room_index]
-                self.player.position[0] = self.WIDTH - player_width
+                self.player_avatar.position[0] = self.WIDTH - player_width
             else:
-                self.player.position[0] = 0
+                self.player_avatar.position[0] = 0
 
         # RECHTS
-        elif self.player.position[0] + player_width > self.WIDTH:
+        elif self.player_avatar.position[0] + player_width > self.WIDTH:
             if self.current_room_index < len(self.rooms) - 1:
                 self.current_room_index += 1
                 self.current_room = self.rooms[self.current_room_index]
-                self.player.position[0] = 0
+                self.player_avatar.position[0] = 0
             else:
-                self.player.position[0] = self.WIDTH - player_width    
+                self.player_avatar.position[0] = self.WIDTH - player_width    
 
     def update(self, elapsed_seconds):
         # Update speler en kamer 
         keys = pygame.key.get_pressed()
-        self.player.update(elapsed_seconds, keys)
+        self.player_avatar.update(elapsed_seconds, keys)
         self.switch_rooms()
 
     def draw(self):
         # Teken huidige kamer en speler
         self.screen.blit(self.current_room.image, (0, 0))
-        self.player.render(self.screen)
+        self.player_avatar.render(self.screen)
             
         # --- Teken box achter ingredienten ---
         # Bepaal de grootte van de box (past bij je sprites)
