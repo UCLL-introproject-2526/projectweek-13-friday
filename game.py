@@ -24,7 +24,6 @@ class Game:
         self.current_room = self.rooms[self.current_room_index]
 
         # player
-
         self.player_inventory = Inventory()
         self.player = Player("Speler1", self.player_inventory)
         self.player_avatar = Avatar(600, "Chicken.png", self.player)
@@ -34,6 +33,7 @@ class Game:
 
         # ingredienten
         self.mixing_pot = Mixingpot()
+        
         self.ingredient_sprites = self.ingredient_sprites = [
     IngredientSprite(Ingredient("rood","kleur"), "ingredient_assets/kleur/snoep_red.png", (800,150)),
     IngredientSprite(Ingredient("geel","kleur"), "ingredient_assets/kleur/snoep_yellow.png", (950,150)),
@@ -65,6 +65,7 @@ class Game:
                         if candy:
                             self.current_candy_sprite = CandySprite(candy, (640, 360))
                             # Voeg candy toe aan player inventory
+                            #voeg de het toe in de juiste slot
                             self.player.current_inventory.add_to_inventory(candy, 1)
 
     def switch_rooms(self):
@@ -149,12 +150,12 @@ class Game:
         # Teken huidige kamer en speler
         self.screen.blit(self.current_room.image, (0, 0))
         self.player_avatar.render(self.screen)
-            
-        # --- Teken box achter ingredienten ---
+
         # Bepaal de grootte van de box (past bij je sprites)
-        box_rect = pygame.Rect(780, 130, 450, 320)  # (x, y, width, height)
-        pygame.draw.rect(self.screen, (50, 50, 50), box_rect)  # donkergrijze box
-        pygame.draw.rect(self.screen, (255, 255, 255), box_rect, 2)  # optioneel witte rand
+        if self.current_room == self.rooms[6]:
+            box_rect = pygame.Rect(780, 130, 450, 320)  # (x, y, width, height)
+            pygame.draw.rect(self.screen, (50, 50, 50), box_rect)  # donkergrijze box
+            pygame.draw.rect(self.screen, (255, 255, 255), box_rect, 2)  # optioneel witte rand
 
         inv_rect = pygame.Rect(10, 10, 675, 75)  # (x, y, width, height)
         pygame.draw.rect(self.screen, (50, 50, 50), inv_rect)  # donkergrijze box
@@ -196,9 +197,12 @@ class Game:
         pygame.draw.rect(self.screen, (150, 150, 150), inv_item9_rect)  # donkergrijze box
         pygame.draw.rect(self.screen, (255, 255, 255), inv_item9_rect, 2)  # optioneel witte rand
 
+        self.slots = [inv_item1_rect, inv_item2_rect, inv_item3_rect, inv_item4_rect, inv_item5_rect, inv_item6_rect, inv_item7_rect, inv_item8_rect, inv_item9_rect]   
+        # --- Teken box achter ingredienten ---
          # teken alle ingrediënten
-        for sprite in self.ingredient_sprites:
-            sprite.draw(self.screen)
+        if self.current_room == self.rooms[6]:
+            for sprite in self.ingredient_sprites:
+                sprite.draw(self.screen)
 
         # teken gemixt snoepje (als er een is)
         if self.current_candy_sprite:

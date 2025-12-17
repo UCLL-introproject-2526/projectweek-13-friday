@@ -11,7 +11,7 @@ class Level:
         self.previous_level = previous_level
 
     def __repr__(self):
-        return f'you need to deliver {self.deliveries_to_complete} with an order size of {self.order_size} and a portion range of {self.portion_}'
+        return f'you need to deliver {self.deliveries_to_complete} with an order size of {self.order_size} and a portion range of {self.portion_range}'
 
 #test
 level_01 = Level(5, 1, [1, 5])

@@ -86,7 +86,7 @@ class IngredientSprite:
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
-
+        
     def is_clicked(self, mouse_pos):
         return self.rect.collidepoint(mouse_pos)
 
@@ -133,9 +133,7 @@ class CandySprite:
         # self.image = pygame.image.load(candy_images[candy_name]).convert_alpha()
         self.image = pygame.transform.scale(pygame.image.load(candy_images[candy_name]).convert_alpha(), (82, 82))
         self.rect = self.image.get_rect(center=pos)
+        #positie nog goed zetten
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
-
-
-
