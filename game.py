@@ -156,6 +156,45 @@ class Game:
         pygame.draw.rect(self.screen, (50, 50, 50), box_rect)  # donkergrijze box
         pygame.draw.rect(self.screen, (255, 255, 255), box_rect, 2)  # optioneel witte rand
 
+        inv_rect = pygame.Rect(10, 10, 675, 75)  # (x, y, width, height)
+        pygame.draw.rect(self.screen, (50, 50, 50), inv_rect)  # donkergrijze box
+        pygame.draw.rect(self.screen, (255, 255, 255), inv_rect, 2)  # optioneel witte rand
+
+        inv_item1_rect = pygame.Rect(10, 10, 75, 75)  # (x, y, width, height)
+        pygame.draw.rect(self.screen, (150, 150, 150), inv_item1_rect)  # donkergrijze box
+        pygame.draw.rect(self.screen, (255, 255, 255), inv_item1_rect, 2)  # optioneel witte rand
+
+        inv_item2_rect = pygame.Rect(85, 10, 75, 75)  # (x, y, width, height)
+        pygame.draw.rect(self.screen, (150, 150, 150), inv_item2_rect)  # donkergrijze box
+        pygame.draw.rect(self.screen, (255, 255, 255), inv_item2_rect, 2)  # optioneel witte rand
+
+        inv_item3_rect = pygame.Rect(160, 10, 75, 75)  # (x, y, width, height)
+        pygame.draw.rect(self.screen, (150, 150, 150), inv_item3_rect)  # donkergrijze box
+        pygame.draw.rect(self.screen, (255, 255, 255), inv_item3_rect, 2)  # optioneel witte rand
+
+        inv_item4_rect = pygame.Rect(235, 10, 75, 75)  # (x, y, width, height)
+        pygame.draw.rect(self.screen, (150, 150, 150), inv_item4_rect)  # donkergrijze box
+        pygame.draw.rect(self.screen, (255, 255, 255), inv_item4_rect, 2)  # optioneel witte 
+        
+        inv_item5_rect = pygame.Rect(310, 10, 75, 75)  # (x, y, width, height)
+        pygame.draw.rect(self.screen, (150, 150, 150), inv_item5_rect)  # donkergrijze box
+        pygame.draw.rect(self.screen, (255, 255, 255), inv_item5_rect, 2)  # optioneel witte rand
+
+        inv_item6_rect = pygame.Rect(385, 10, 75, 75)  # (x, y, width, height)
+        pygame.draw.rect(self.screen, (150, 150, 150), inv_item6_rect)  # donkergrijze box
+        pygame.draw.rect(self.screen, (255, 255, 255), inv_item6_rect, 2)  # optioneel witte rand
+
+        inv_item7_rect = pygame.Rect(460, 10, 75, 75)  # (x, y, width, height)
+        pygame.draw.rect(self.screen, (150, 150, 150), inv_item7_rect)  # donkergrijze box
+        pygame.draw.rect(self.screen, (255, 255, 255), inv_item7_rect, 2)  # optioneel witte 
+        
+        inv_item8_rect = pygame.Rect(535, 10, 75, 75)  # (x, y, width, height)
+        pygame.draw.rect(self.screen, (150, 150, 150), inv_item8_rect)  # donkergrijze box
+        pygame.draw.rect(self.screen, (255, 255, 255), inv_item8_rect, 2)  # optioneel witte rand
+
+        inv_item9_rect = pygame.Rect(610, 10, 75, 75)  # (x, y, width, height)
+        pygame.draw.rect(self.screen, (150, 150, 150), inv_item9_rect)  # donkergrijze box
+        pygame.draw.rect(self.screen, (255, 255, 255), inv_item9_rect, 2)  # optioneel witte rand
 
          # teken alle ingrediënten
         for sprite in self.ingredient_sprites:
