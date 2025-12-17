@@ -65,7 +65,5 @@ class Candy_type:
 #print the name/ key of the candy in the bag
     def __repr__(self):
         return f"{self.name}"
-
-
-        
+ 
 # test

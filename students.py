@@ -1,6 +1,7 @@
 import random
 #speed up the process of making students by randomizing a location that hasn't 
 #been used last time
+
 class Student:
     def __init__(self, name):
         self.name = name
@@ -29,5 +30,5 @@ class Student:
             return f'{self.name} wants to order {self.order["order"][1]} piece of your {self.order["order"][0]} supply'
     
 #when we reach higher levels, students may have more orders
-    # def select_order(self,):
-    #     pass
+    def select_order(self,):
+        pass
