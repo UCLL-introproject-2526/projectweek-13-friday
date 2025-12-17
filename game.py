@@ -180,9 +180,10 @@ class Game:
             
         # --- Teken box achter ingredienten ---
         # Bepaal de grootte van de box (past bij je sprites)
-        box_rect = pygame.Rect(780, 130, 450, 320)  # (x, y, width, height)
-        pygame.draw.rect(self.screen, (50, 50, 50), box_rect)  # donkergrijze box
-        pygame.draw.rect(self.screen, (255, 255, 255), box_rect, 2)  # optioneel witte rand
+        if self.current_room == self.rooms[6]:
+            box_rect = pygame.Rect(780, 130, 450, 320)  # (x, y, width, height)
+            pygame.draw.rect(self.screen, (50, 50, 50), box_rect)  # donkergrijze box
+            pygame.draw.rect(self.screen, (255, 255, 255), box_rect, 2)  # optioneel witte rand
 
         inv_rect = pygame.Rect(10, 10, 675, 75)  # (x, y, width, height)
         pygame.draw.rect(self.screen, (50, 50, 50), inv_rect)  # donkergrijze box
@@ -263,13 +264,14 @@ class Game:
                         (rect.right - 20, rect.bottom - 20)
                     )
 
-         # teken alle ingrediënten
-        for sprite in self.ingredient_sprites:
-            sprite.draw(self.screen)
+        if self.current_room == self.rooms[6]:
+            # teken alle ingrediënten
+            for sprite in self.ingredient_sprites:
+                sprite.draw(self.screen)
 
-        # teken gemixt snoepje (als er een is)
-        if self.current_candy_sprite:
-            self.current_candy_sprite.draw(self.screen)
+        # # teken gemixt snoepje (als er een is)
+        # if self.current_candy_sprite:
+        #     self.current_candy_sprite.draw(self.screen)
 
         pygame.display.flip()
 
