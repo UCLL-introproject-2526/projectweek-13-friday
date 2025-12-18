@@ -3,12 +3,18 @@
 # fades added!!
 
 import pygame
-from entities.player_mechanics import Player
+from entities.player_mechanics import Player 
 from world.hallway import Hallway
 from world.room import Room
 from world.playground import Playground
 from world.lab import Lab
 from ui.menu import Menu
+from ui.lab import *
+from ingredients.ingredient import Ingredient, Mixingpot, IngredientSprite, CandySprite, candy_images
+from player_implementatie.player import Inventory, Player_
+from player_implementatie.transaction import Transaction
+from player_implementatie.students import Student
+
 # from world.battle_arena import BattleArena
 
 class Game:
@@ -42,6 +48,41 @@ class Game:
         self.fade_target = None
         self.fade_spawn_x = 0
 
+
+        # ingredient stuff
+        self.mixing_pot = Mixingpot()
+
+        # ingredienten als sprites
+        self.ingredient_sprites = [
+        IngredientSprite(Ingredient("rood","kleur"), "ingredients/kleur/snoep_red.png", (800,150)),
+        IngredientSprite(Ingredient("geel","kleur"), "ingredients/kleur/snoep_yellow.png", (950,150)),
+        IngredientSprite(Ingredient("blauw","kleur"), "ingredients/kleur/snoep_blue.png", (1100,150)),
+        IngredientSprite(Ingredient("appel","smaak"), "ingredients/smaak/appel.png", (800,275)),
+        IngredientSprite(Ingredient("banaan","smaak"), "ingredients/smaak/banaan.png", (950,275)),
+        IngredientSprite(Ingredient("druif","smaak"), "ingredients/smaak/grape.png", (1100,275))
+        ]
+
+        self.current_candy_sprite = None
+
+        # player inventory
+        self.player_inventory = Inventory()
+        self.player_info = Player_("Speler1", self.player_inventory)
+
+        # inventory slots
+        self.inventory_slots = [
+    {"name": None, "count": 0},
+    {"name": None, "count": 0},
+    {"name": None, "count": 0},
+    {"name": None, "count": 0},
+    {"name": None, "count": 0},
+    {"name": None, "count": 0},
+    {"name": None, "count": 0},
+    {"name": None, "count": 0},
+    {"name": None, "count": 0}
+]
+
+
+
     # swish swish..
     def switch_area(self, area_name, spawn_x):
         self.current_area = area_name
@@ -65,6 +106,28 @@ class Game:
         if self.fade_alpha >= 255:
             self.switch_area(self.fade_target, self.fade_spawn_x)
             self.fading = False
+
+    def handle_ingredient_clicks(self, events):
+        for event in events:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                for sprite in self.ingredient_sprites:
+                    if sprite.is_clicked(mouse_pos):
+                        candy = self.mixing_pot.add_ingredient(sprite.ingredient)
+                        if candy:
+                            
+                            # update inventory
+                            for slot in self.inventory_slots:
+                                if slot["name"] == candy:
+                                    slot["count"] += 1
+                                    return
+                            for slot in self.inventory_slots:
+                                if slot["name"] is None:
+                                    slot["name"] = candy
+                                    slot["count"] = 1
+                                    return
+                            self.player.current_inventory.add_to_inventory(candy, 1)
+
 
 
     # run.. run.. run..
@@ -116,6 +179,14 @@ class Game:
                 
                 if self.fading:
                     self.handle_fade()
+                
+                # ingredient-logica
+                if self.current_area == "lab" and not self.fading:
+                    self.handle_ingredient_clicks(events)
+                    draw_lab_ui(self)
+                    
+
+                
                 
             pygame.display.flip()
         pygame.quit()
