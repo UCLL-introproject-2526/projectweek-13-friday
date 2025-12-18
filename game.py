@@ -70,16 +70,16 @@ class Game:
 
         # inventory slots
         self.inventory_slots = [
-    {"name": None, "count": 0},
-    {"name": None, "count": 0},
-    {"name": None, "count": 0},
-    {"name": None, "count": 0},
-    {"name": None, "count": 0},
-    {"name": None, "count": 0},
-    {"name": None, "count": 0},
-    {"name": None, "count": 0},
-    {"name": None, "count": 0}
-]
+            {"name": None, "count": 0},
+            {"name": None, "count": 0},
+            {"name": None, "count": 0},
+            {"name": None, "count": 0},
+            {"name": None, "count": 0},
+            {"name": None, "count": 0},
+            {"name": None, "count": 0},
+            {"name": None, "count": 0},
+            {"name": None, "count": 0}
+        ]
 
 
 
