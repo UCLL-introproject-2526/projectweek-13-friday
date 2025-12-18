@@ -193,7 +193,7 @@ class Game:
 
 
 
-# Hebben we nodig voor publishing maar werkt nog niet volledig
+#       EEN ASYNC FUNCTIE VOOR DE WEBVERSIE/VOOR TE KUNNEN UPLOADEN OP ITCH.IO    
     async def run(self):
         while self.running:
             dt = self.clock.tick(60) / 1000
