@@ -52,7 +52,15 @@ class Game:
 
         self.students = [
             Student("Alice"),
-            Student("Bob")
+            Student("Bob"),
+            Student("Student1"),
+            Student("student2"),
+            Student("student3"),
+            Student("Student4"),
+            Student("Student5"),
+            Student("student6"),
+            Student("student7"),
+            Student("Student8"),
         ]
 
         for student in self.students:
