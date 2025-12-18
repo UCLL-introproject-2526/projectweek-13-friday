@@ -31,6 +31,7 @@ class Room:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
                 # return op plaats waar je binnenkwam (positielogica)
                 game.start_fade("hallway", self.return_x)
+    
 
     def draw(self, screen, player, game):
         screen.fill((40, 60, 120))
@@ -41,7 +42,10 @@ class Room:
         students_to_draw = random.sample(self.students, n_to_draw)
         x = 50
         y = 436
+        
+        student_location = {}
         for student in self.students_to_draw:
+            student_location[student] = x
             rect = pygame.Rect(x , y ,50,50)
             pygame.draw.rect(screen, student.color, rect)
             x = x + 100
