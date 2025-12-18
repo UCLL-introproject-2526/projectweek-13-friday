@@ -1,4 +1,0 @@
-drop: black , salty
-bubblegum: pink, strawberry
-sourpatch: mixed, sour
-cola bottle:  brown, cola

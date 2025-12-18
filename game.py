@@ -2,21 +2,14 @@
 # area management
 # fades added!!
 
-import asyncio
 import pygame
-from entities.player_mechanics import Player 
+from entities.player import Player
 from world.hallway import Hallway
 from world.room import Room
 from world.playground import Playground
 from world.lab import Lab
 from ui.menu import Menu
-from ui.lab import *
-from ingredients.ingredient import Ingredient, Mixingpot, IngredientSprite, CandySprite, candy_images
-from player_implementatie.player import Inventory, Player_
-from player_implementatie.transaction import Transaction
-from player_implementatie.students import Student
-
-# from world.battle_arena import BattleArena
+from world.battle_arena import BattleArena
 
 class Game:
     def __init__(self):
@@ -40,7 +33,7 @@ class Game:
             "principal": Room("Principal Office", 1800),
             "playground": Playground(),
             "lab": Lab(),
-            # "battle": BattleArena() # NIEUW!!! test subject for now..
+            "battle": BattleArena() # NIEUW!!! test subject for now..
         }
         self.current_area = "hallway"   # spawnpoint (hallway for now.. meest logische)
 
@@ -48,40 +41,6 @@ class Game:
         self.fade_alpha = 0
         self.fade_target = None
         self.fade_spawn_x = 0
-
-        # ingredient stuff
-        self.mixing_pot = Mixingpot()
-
-        # ingredienten als sprites
-        self.ingredient_sprites = [
-        IngredientSprite(Ingredient("rood","kleur"), "ingredients/kleur/snoep_red.png", (800,150)),
-        IngredientSprite(Ingredient("geel","kleur"), "ingredients/kleur/snoep_yellow.png", (950,150)),
-        IngredientSprite(Ingredient("blauw","kleur"), "ingredients/kleur/snoep_blue.png", (1100,150)),
-        IngredientSprite(Ingredient("appel","smaak"), "ingredients/smaak/appel.png", (800,275)),
-        IngredientSprite(Ingredient("banaan","smaak"), "ingredients/smaak/banaan.png", (950,275)),
-        IngredientSprite(Ingredient("druif","smaak"), "ingredients/smaak/grape.png", (1100,275))
-        ]
-
-        self.current_candy_sprite = None
-
-        # player inventory
-        self.player_inventory = Inventory()
-        self.player_info = Player_("Speler1", self.player_inventory)
-
-        # inventory slots
-        self.inventory_slots = [
-            {"name": None, "count": 0},
-            {"name": None, "count": 0},
-            {"name": None, "count": 0},
-            {"name": None, "count": 0},
-            {"name": None, "count": 0},
-            {"name": None, "count": 0},
-            {"name": None, "count": 0},
-            {"name": None, "count": 0},
-            {"name": None, "count": 0}
-        ]
-
-
 
     # swish swish..
     def switch_area(self, area_name, spawn_x):
@@ -107,119 +66,23 @@ class Game:
             self.switch_area(self.fade_target, self.fade_spawn_x)
             self.fading = False
 
-    def handle_ingredient_clicks(self, events):
-        for event in events:
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_pos = pygame.mouse.get_pos()
-                for sprite in self.ingredient_sprites:
-                    if sprite.is_clicked(mouse_pos):
-                        candy = self.mixing_pot.add_ingredient(sprite.ingredient)
-                        if candy:
-                            
-                            # update inventory
-                            for slot in self.inventory_slots:
-                                if slot["name"] == candy:
-                                    slot["count"] += 1
-                                    return
-                            for slot in self.inventory_slots:
-                                if slot["name"] is None:
-                                    slot["name"] = candy
-                                    slot["count"] = 1
-                                    return
-                            self.player.current_inventory.add_to_inventory(candy, 1)
-
-
 
     # run.. run.. run..
-    # def run(self):
-    #     while self.running:
-    #         dt = self.clock.tick(60) / 1000
-    #         events = pygame.event.get() # events worden hier verzameld !!
-            
-    #         for event in events:
-    #             if event.type == pygame.QUIT:
-    #                 self.running = False
-
-    #         # # ---------------- TEST TRIGGER FOR BATTLE --------------
-    #         # if event.type == pygame.KEYDOWN:
-    #         #         if event.key == pygame.K_b: # Druk op 'B' om te vechten
-    #         #             print("Debug: Battle gestart!")
-    #         #             self.start_fade("battle", 100)
-    #         # # -------- NOT PERMANENT !!!! -------------------------
-            
-    #         self.screen.fill((0, 0, 0)) # menu fix: "wis het scherm aan begin van elke fix"
-
-                
-    #         # if not self.fading:
-    #         #     area = self.areas[self.current_area]
-    #         #     area.update(self.player, events, self)
-
-    #         # -- MENU STUFF !!
-    #         if self.state == "menu":
-    #             self.state = self.menu.update(events)
-    #             self.menu.draw(self.screen)
-
-    #         # -- GAMEPLAY ITSELF.. 
-    #         elif self.state == "playing":
-    #             if not self.fading:
-    #                 area = self.areas[self.current_area]
-    #                 area.update(self.player, events, self)
-
-    #             # teken de wereld
-    #             area = self.areas[self.current_area]
-    #             self.screen.fill((30, 30, 30))
-    #             area.draw(self.screen, self.player, self)
-            
-    #             # TRIGGER DE DEUR PROMPTS HIER (nadat de area getekend is!!!)
-    #             if self.current_area == "hallway" and not self.fading:
-    #                 offset_x = max(0, self.player.rect.centerx - 640)
-    #                 offset_x = min(offset_x, area.width - 1280)
-    #                 for door in area.doors:
-    #                     door.update(self.player, events, self, offset_x)
-                
-    #             if self.fading:
-    #                 self.handle_fade()
-                
-    #             # ingredient-logica
-    #             if self.current_area == "lab" and not self.fading:
-    #                 self.handle_ingredient_clicks(events)
-    #                 draw_lab_ui(self)
-                    
-
-                
-                
-    #         pygame.display.flip()
-    #     pygame.quit()
-
-
-
-#       EEN ASYNC FUNCTIE VOOR DE WEBVERSIE/VOOR TE KUNNEN UPLOADEN OP ITCH.IO    
-    async def run(self):
+    def run(self):
         while self.running:
             dt = self.clock.tick(60) / 1000
-            events = pygame.event.get()
-
+            events = pygame.event.get() # events worden hier verzameld !!
+            
             for event in events:
                 if event.type == pygame.QUIT:
                     self.running = False
 
-            self.screen.fill((0, 0, 0))
-
-            if self.state == "menu":
-                self.state = self.menu.update(events)
-                self.menu.draw(self.screen)
-
-            elif self.state == "playing":
-                area = self.areas[self.current_area]
-                area.update(self.player, events, self)
-                area.draw(self.screen, self.player, self)
-
-#         # # ---------------- TEST TRIGGER FOR BATTLE --------------
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_b: # Druk op 'B' om te vechten
-                    print("Debug: Battle gestart!")
-                    self.start_fade("battle", 100)
-            # -------- NOT PERMANENT !!!! -------------------------
+                # ---------------- TEST TRIGGER FOR BATTLE --------------
+                if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_b: # Druk op 'B' om te vechten
+                            print("Debug: Battle gestart!")
+                            self.start_fade("battle", 100)
+                # -------- NOT PERMANENT !!!! -------------------------
             
             self.screen.fill((0, 0, 0)) # menu fix: "wis het scherm aan begin van elke fix"
 
@@ -235,17 +98,29 @@ class Game:
 
             # -- GAMEPLAY ITSELF.. 
             elif self.state == "playing":
+                area = self.areas[self.current_area]
+                
                 if not self.fading:
-                    area = self.areas[self.current_area]
                     area.update(self.player, events, self)
+                    
+                    # NIEUW: Check of we in de battle arena zijn en of het gevecht klaar is
+                    if self.current_area == "battle":
+                        # Als de arena phase weer op "intro" staat (door de E-toets reset)
+                        # OF als je een variabele 'battle_concluded' hebt:
+                        if area.phase == "intro" and area.winner is not None:
+                             # We gaan terug naar de hallway
+                             # Je kunt hier kiezen: altijd naar 100, of bewaar de oude x
+                             spawn_pos = 100 if area.winner == "enemy" else self.player.rect.x
+                             self.start_fade("hallway", spawn_pos)
+                             area.winner = None # Reset winner zodat hij niet blijft faden
 
                 # teken de wereld
-                area = self.areas[self.current_area]
                 self.screen.fill((30, 30, 30))
                 area.draw(self.screen, self.player, self)
             
-                # TRIGGER DE DEUR PROMPTS HIER (nadat de area getekend is!!!)
+                # TRIGGER DE DEUR PROMPTS HIER
                 if self.current_area == "hallway" and not self.fading:
+                    # ... je bestaande deur logica ...
                     offset_x = max(0, self.player.rect.centerx - 640)
                     offset_x = min(offset_x, area.width - 1280)
                     for door in area.doors:
@@ -253,16 +128,5 @@ class Game:
                 
                 if self.fading:
                     self.handle_fade()
-                
-                # ingredient-logica
-                if self.current_area == "lab" and not self.fading:
-                    self.handle_ingredient_clicks(events)
-                
-                draw_lab_ui(self)
-
             pygame.display.flip()
-
-            # verplicht voor webversie
-            await asyncio.sleep(0)
-
         pygame.quit()
