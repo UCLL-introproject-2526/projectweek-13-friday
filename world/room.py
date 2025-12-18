@@ -10,6 +10,7 @@ class Room:
         self.name = name
         self.return_x = return_x
         self.students = []
+        self.student_to_draw = []
 
     # def students_in_rooms(self):
     #     student1 = Student("Student1")
@@ -33,15 +34,16 @@ class Room:
 
     def draw(self, screen, player, game):
         screen.fill((40, 60, 120))
+    
 
         n_to_draw = min(3, len(self.students))  # pak maximaal 3 studenten, of minder als er minder zijn
 
         students_to_draw = random.sample(self.students, n_to_draw)
         x = 50
         y = 436
-        for student in students_to_draw:
+        for student in self.students_to_draw:
             rect = pygame.Rect(x , y ,50,50)
-            pygame.draw.rect(screen, (120, 33, 250), rect)
+            pygame.draw.rect(screen, student.color, rect)
             x = x + 100
         
         # kamertitle!!!

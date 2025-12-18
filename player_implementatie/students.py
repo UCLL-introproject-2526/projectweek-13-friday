@@ -4,10 +4,11 @@ from ingredients.ingredient import candy_images
 #been used last time
 
 class Student:
-    def __init__(self, name):
+    def __init__(self, name, color):
         self.name = name
         self.favourite_sweets = []
         self.order = {}
+        self.color = color
 
 #add an order to put in the demand dict,  key: order , value candy_type, amount
 #randomize a type from the recipe.txt file and randomze an amount from 1-10

@@ -55,13 +55,13 @@ bag.add_to_inventory("cola bottle", 100)
 
 
 #student info
-student_mark = Student("Mark")
-student_mark.add_order()
+# student_mark = Student("Mark")
+# student_mark.add_order()
 
 #transaction info
-print(student_mark)
-first = Transaction()
-first.delivery_transaction(p1, student_mark)
+# print(student_mark)
+# first = Transaction()
+# first.delivery_transaction(p1, student_mark)
 #bag.decrease_inventory(student_mark.order["order"][0], student_mark.order["order"][1])
 
 

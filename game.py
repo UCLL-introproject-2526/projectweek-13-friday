@@ -51,20 +51,26 @@ class Game:
                 rooms.append(area)
 
         self.students = [
-            Student("Alice"),
-            Student("Bob"),
-            Student("Student1"),
-            Student("student2"),
-            Student("student3"),
-            Student("Student4"),
-            Student("Student5"),
-            Student("student6"),
-            Student("student7"),
-            Student("Student8"),
+            Student("Alice", (60, 255, 100)),
+            Student("Bob", (250, 230, 240)),
+            Student("Student1", (66, 130, 240)),
+            # Student("student2", (203, 20, 240)),
+            # Student("student3",(255, 255, 255)),
+            # Student("Student4", (10, 255, 240)),
+            # Student("Student5", (200, 130, 10)),
+            # Student("student6,",(6, 130, 240)),
+            # Student("student7", (66, 106, 240)),
+            # Student("Student8", (66, 200, 20)),
         ]
 
         for student in self.students:
             random.choice(rooms).students.append(student)
+
+        for room in rooms:
+            n_to_draw = min(3, len(room.students))
+            room.students_to_draw = random.sample(room.students, n_to_draw)
+
+
 
         self.fading = False
         self.fade_alpha = 0
