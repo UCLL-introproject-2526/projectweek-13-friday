@@ -3,6 +3,10 @@ from ingredients.ingredient import candy_images
 
 def draw_lab_ui(self):
 
+        # assigments border
+        inv_rect = pygame.Rect(1120, 10, 150, 70)
+        pygame.draw.rect(self.screen, (150, 150, 150), inv_rect)
+        pygame.draw.rect(self.screen, (255, 255, 255), inv_rect, 2)
 
         # Inventory achtergrond
         inv_rect = pygame.Rect(10, 10, 675, 75)

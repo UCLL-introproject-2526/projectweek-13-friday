@@ -67,7 +67,7 @@ class Game:
 
         for room in rooms:
             n_to_draw = min(3, len(room.students))
-            room.students_to_draw = random.sample(room.students, n_to_draw)
+            room.students_to_draw = random.sample(room.students, n_to_draw)     # subset van studenten wordt vast gezet
 
 
 
@@ -156,6 +156,29 @@ class Game:
                                     slot["count"] = 1
                                     return
                             self.player.current_inventory.add_to_inventory(candy, 1)
+
+    def handle_assignments(self, events, player):
+        # als trade plaatsvindt dan moet counter assigment omhoog
+        # event = trade 
+
+        # een trade wordt gemaakt , we hebben da nummer nodig, 
+        # nummer.payment wordt gebruikt als counter += 1
+        # altijd player.self.current_assigments displayen
+        # 
+
+
+        if player.current_assigments:
+        # update inventory
+        for slot in self.inventory_slots:
+            if slot["name"] == candy:
+                slot["count"] += 1
+                return
+        for slot in self.inventory_slots:
+            if slot["name"] is None:
+                slot["name"] = candy
+                slot["count"] = 1
+                return
+        self.player.current_inventory.add_to_inventory(candy, 1)
 
 
 
