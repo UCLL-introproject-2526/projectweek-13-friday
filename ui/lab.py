@@ -2,12 +2,7 @@ import pygame
 from ingredients.ingredient import candy_images
 
 def draw_lab_ui(self):
-    # Alleen tekenen als je in de lab bent
-    if self.current_area == "lab":
-        # Box achter ingredienten
-        box_rect = pygame.Rect(780, 130, 450, 300)
-        pygame.draw.rect(self.screen, (150, 150, 150), box_rect)  # donkergrijs
-        pygame.draw.rect(self.screen, (255, 255, 255), box_rect, 3)  # witte rand
+
 
         # Inventory achtergrond
         inv_rect = pygame.Rect(10, 10, 675, 75)
@@ -62,6 +57,12 @@ def draw_lab_ui(self):
     inv_item8_rect,
     inv_item9_rect,
 ]
+        # Alleen tekenen als je in de lab bent
+        if self.current_area == "lab":
+            # Box achter ingredienten
+            box_rect = pygame.Rect(780, 130, 450, 300)
+            pygame.draw.rect(self.screen, (150, 150, 150), box_rect)  # donkergrijs
+            pygame.draw.rect(self.screen, (255, 255, 255), box_rect, 3)  # witte rand
         
         font = pygame.font.Font(None, 28)       # maakt lettertype aan , (lettertype, grootte)
 
@@ -86,12 +87,13 @@ def draw_lab_ui(self):
                     text = font.render(str(slot["count"]), True, (255, 255, 255))   # str() -> want pygame kan geen getallen tekenen
                     self.screen.blit(
                         text,
-                        (rect.right - 25, rect.bottom - 20) # count tekenen onderaan het vakje 
+                        (rect.right - 28, rect.bottom - 20) # count tekenen onderaan het vakje 
                     )
 
         # Teken alle ingredient sprites
-        for sprite in self.ingredient_sprites:
-            sprite.draw(self.screen)
+        if self.current_area == "lab":
+            for sprite in self.ingredient_sprites:
+                sprite.draw(self.screen)
 
         mouse_position = pygame.mouse.get_pos()
         hovering = False 

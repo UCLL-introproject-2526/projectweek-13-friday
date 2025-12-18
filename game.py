@@ -14,6 +14,8 @@ from ingredients.ingredient import Ingredient, Mixingpot, IngredientSprite, Cand
 from player_implementatie.player import Inventory, Player_
 from player_implementatie.transaction import Transaction
 from player_implementatie.students import Student
+import random
+
 
 # from world.battle_arena import BattleArena
 
@@ -43,6 +45,19 @@ class Game:
         }
         self.current_area = "hallway"   # spawnpoint (hallway for now.. meest logische)
 
+        rooms = []
+        for area in self.areas.values():
+            if type(area) == Room:
+                rooms.append(area)
+
+        self.students = [
+            Student("Alice"),
+            Student("Bob")
+        ]
+
+        for student in self.students:
+            random.choice(rooms).students.append(student)
+
         self.fading = False
         self.fade_alpha = 0
         self.fade_target = None
@@ -51,6 +66,7 @@ class Game:
 
         # ingredient stuff
         self.mixing_pot = Mixingpot()
+
 
         # ingredienten als sprites
         self.ingredient_sprites = [
@@ -183,7 +199,8 @@ class Game:
                 # ingredient-logica
                 if self.current_area == "lab" and not self.fading:
                     self.handle_ingredient_clicks(events)
-                    draw_lab_ui(self)
+                
+                draw_lab_ui(self)
                     
 
                 

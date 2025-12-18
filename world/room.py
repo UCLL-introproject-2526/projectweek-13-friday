@@ -1,12 +1,22 @@
 # set rooms na deuren + return done!! je zit niet meer vast :)
 
 import pygame
+import random
 from ui.prompt import draw_prompt
+from player_implementatie.students import Student
 
 class Room:
     def __init__(self, name, return_x):
         self.name = name
         self.return_x = return_x
+        self.students = []
+
+    # def students_in_rooms(self):
+    #     student1 = Student("Student1")
+    #     student2 = Student("student2")
+    #     student3 = Student("student3")
+
+        # return [student1, student2, student3]
 
     def update(self, player, events, game):
         keys = pygame.key.get_pressed()
@@ -23,6 +33,12 @@ class Room:
 
     def draw(self, screen, player, game):
         screen.fill((40, 60, 120))
+        x = 50
+        y = 436
+        for student in self.students:
+            rect = pygame.Rect(x , y ,50,50)
+            pygame.draw.rect(screen, (120, 33, 250), rect)
+            x = x + 100
         
         # kamertitle!!!
         font = pygame.font.SysFont(None, 48)
