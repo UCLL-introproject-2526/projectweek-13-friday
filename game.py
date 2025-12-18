@@ -2,6 +2,7 @@
 # area management
 # fades added!!
 
+import asyncio
 import pygame
 from entities.player_mechanics import Player 
 from world.hallway import Hallway
@@ -47,7 +48,6 @@ class Game:
         self.fade_alpha = 0
         self.fade_target = None
         self.fade_spawn_x = 0
-
 
         # ingredient stuff
         self.mixing_pot = Mixingpot()
@@ -131,21 +131,95 @@ class Game:
 
 
     # run.. run.. run..
-    def run(self):
+    # def run(self):
+    #     while self.running:
+    #         dt = self.clock.tick(60) / 1000
+    #         events = pygame.event.get() # events worden hier verzameld !!
+            
+    #         for event in events:
+    #             if event.type == pygame.QUIT:
+    #                 self.running = False
+
+    #         # # ---------------- TEST TRIGGER FOR BATTLE --------------
+    #         # if event.type == pygame.KEYDOWN:
+    #         #         if event.key == pygame.K_b: # Druk op 'B' om te vechten
+    #         #             print("Debug: Battle gestart!")
+    #         #             self.start_fade("battle", 100)
+    #         # # -------- NOT PERMANENT !!!! -------------------------
+            
+    #         self.screen.fill((0, 0, 0)) # menu fix: "wis het scherm aan begin van elke fix"
+
+                
+    #         # if not self.fading:
+    #         #     area = self.areas[self.current_area]
+    #         #     area.update(self.player, events, self)
+
+    #         # -- MENU STUFF !!
+    #         if self.state == "menu":
+    #             self.state = self.menu.update(events)
+    #             self.menu.draw(self.screen)
+
+    #         # -- GAMEPLAY ITSELF.. 
+    #         elif self.state == "playing":
+    #             if not self.fading:
+    #                 area = self.areas[self.current_area]
+    #                 area.update(self.player, events, self)
+
+    #             # teken de wereld
+    #             area = self.areas[self.current_area]
+    #             self.screen.fill((30, 30, 30))
+    #             area.draw(self.screen, self.player, self)
+            
+    #             # TRIGGER DE DEUR PROMPTS HIER (nadat de area getekend is!!!)
+    #             if self.current_area == "hallway" and not self.fading:
+    #                 offset_x = max(0, self.player.rect.centerx - 640)
+    #                 offset_x = min(offset_x, area.width - 1280)
+    #                 for door in area.doors:
+    #                     door.update(self.player, events, self, offset_x)
+                
+    #             if self.fading:
+    #                 self.handle_fade()
+                
+    #             # ingredient-logica
+    #             if self.current_area == "lab" and not self.fading:
+    #                 self.handle_ingredient_clicks(events)
+    #                 draw_lab_ui(self)
+                    
+
+                
+                
+    #         pygame.display.flip()
+    #     pygame.quit()
+
+
+
+# Hebben we nodig voor publishing maar werkt nog niet volledig
+    async def run(self):
         while self.running:
             dt = self.clock.tick(60) / 1000
-            events = pygame.event.get() # events worden hier verzameld !!
-            
+            events = pygame.event.get()
+
             for event in events:
                 if event.type == pygame.QUIT:
                     self.running = False
 
-            # # ---------------- TEST TRIGGER FOR BATTLE --------------
-            # if event.type == pygame.KEYDOWN:
-            #         if event.key == pygame.K_b: # Druk op 'B' om te vechten
-            #             print("Debug: Battle gestart!")
-            #             self.start_fade("battle", 100)
-            # # -------- NOT PERMANENT !!!! -------------------------
+            self.screen.fill((0, 0, 0))
+
+            if self.state == "menu":
+                self.state = self.menu.update(events)
+                self.menu.draw(self.screen)
+
+            elif self.state == "playing":
+                area = self.areas[self.current_area]
+                area.update(self.player, events, self)
+                area.draw(self.screen, self.player, self)
+
+#         # # ---------------- TEST TRIGGER FOR BATTLE --------------
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_b: # Druk op 'B' om te vechten
+                    print("Debug: Battle gestart!")
+                    self.start_fade("battle", 100)
+            # -------- NOT PERMANENT !!!! -------------------------
             
             self.screen.fill((0, 0, 0)) # menu fix: "wis het scherm aan begin van elke fix"
 
@@ -184,9 +258,10 @@ class Game:
                 if self.current_area == "lab" and not self.fading:
                     self.handle_ingredient_clicks(events)
                     draw_lab_ui(self)
-                    
 
-                
-                
             pygame.display.flip()
+
+            # verplicht voor webversie
+            await asyncio.sleep(0)
+
         pygame.quit()
