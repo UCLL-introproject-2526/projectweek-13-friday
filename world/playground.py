@@ -8,14 +8,25 @@ class Playground:
         self.confirm_lab = False
 
     def update(self, player, events, game):
-        keys = pygame.key.get_pressed()
-        player.update(game.clock.get_time() / 1000, keys)
+        # keys = pygame.key.get_pressed()
+        # player.update(game.clock.get_time() / 1000, keys)
 
-        # contact w muur links = METEEN terug naar hallway (no 'press E to....')
+        dt = game.clock.get_time() / 1000
+        keys = pygame.key.get_pressed()
+        player.update(dt, keys)
+
+        # # contact w muur links = METEEN terug naar hallway (no 'press E to....')
+        # if player.rect.left <= 0:
+        #     player.rect.left = 0
+        #     game.start_fade("hallway", 2900)
+        #     return
+        
         if player.rect.left <= 0:
             player.rect.left = 0
-            game.start_fade("hallway", 2900)
-            return
+            # fix problem: spawn de speler in Hallway rechts
+            # zodat hij niet direct de trigger 'rect.right >= width' raakt ??
+            spawn_x = 3000 - 200 
+            game.start_fade("hallway", spawn_x)
 
         if player.rect.right >= game.WIDTH:
             player.rect.right = game.WIDTH
