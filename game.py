@@ -20,7 +20,7 @@ class Game:
         self.current_room = self.rooms[0]
 
         # current room index (voor de simpele lijst-implementatie)
-        self.current_room_index = 0
+        self.current_room_index = 2
         self.current_room = self.rooms[self.current_room_index]
 
         # player
@@ -78,13 +78,13 @@ class Game:
                         candy = self.mixing_pot.add_ingredient(sprite.ingredient)   #stuurt ingredient naar mixing pot
                         if candy:
                             self.current_candy_sprite = CandySprite(candy, (640, 360))
-                             # 1️⃣ Eerst kijken: bestaat dit snoepje al?
+                             # Eerst kijken: bestaat dit snoepje al?
                             for slot in self.inventory_slots:
                                 if slot["name"] == candy:
                                     slot["count"] += 1
                                     return  # stop hier → klaar
                             
-                               # 2️⃣ Anders: eerste lege slot zoeken
+                               # Anders: eerste lege slot zoeken
                             for slot in self.inventory_slots:
                                 if slot["name"] is None:
                                     slot["name"] = candy
@@ -181,9 +181,9 @@ class Game:
         # --- Teken box achter ingredienten ---
         # Bepaal de grootte van de box (past bij je sprites)
         if self.current_room == self.rooms[6]:
-            box_rect = pygame.Rect(780, 130, 450, 320)  # (x, y, width, height)
-            pygame.draw.rect(self.screen, (50, 50, 50), box_rect)  # donkergrijze box
-            pygame.draw.rect(self.screen, (255, 255, 255), box_rect, 2)  # optioneel witte rand
+            box_rect = pygame.Rect(780, 130, 450, 300)  # (x, y, width, height)
+            pygame.draw.rect(self.screen, (150, 150, 150), box_rect)  # donkergrijze box
+            pygame.draw.rect(self.screen, (255, 255, 255), box_rect, 3)  # optioneel witte rand
 
         inv_rect = pygame.Rect(10, 10, 675, 75)  # (x, y, width, height)
         pygame.draw.rect(self.screen, (50, 50, 50), inv_rect)  # donkergrijze box
@@ -238,30 +238,30 @@ class Game:
     inv_item9_rect,
 ]
         
-        font = pygame.font.Font(None, 28)
+        font = pygame.font.Font(None, 28)       # maakt lettertype aan , (lettertype, grootte)
 
-        for i in range(len(self.inventory_slots)):  
-            slot = self.inventory_slots[i]
+        for i in range(len(self.inventory_slots)):         
+            slot = self.inventory_slots[i]          # huidig slot ophalen
 
-            if slot["name"] is not None:
-                rect = inventory_rects[i]
+            if slot["name"] is not None:        # leeg vakje -> niets tekenen
+                rect = inventory_rects[i]       
 
                 # snoep-afbeelding
                 image_path = candy_images[slot["name"]]
-                image = pygame.image.load(image_path).convert_alpha()
+                image = pygame.image.load(image_path).convert_alpha()   # afbeelding laden en schalen
                 image = pygame.transform.scale(image, (64, 64))
 
                 self.screen.blit(
                     image,
-                    (rect.x + 5, rect.y + 5)
+                    (rect.x + 5, rect.y + 5)    #tekent het snoepje wat meer naar binnen in het vakje
                 )
 
                 # teller``
-                if slot["count"] > 1:
-                    text = font.render(str(slot["count"]), True, (255, 255, 255))
+                if slot["count"] > 1:       # als er al een snoepje inzit dan:
+                    text = font.render(str(slot["count"]), True, (255, 255, 255))   # str() want pygame kan geen getallen tekenen True -> gladde letters
                     self.screen.blit(
                         text,
-                        (rect.right - 20, rect.bottom - 20)
+                        (rect.right - 20, rect.bottom - 20)     # count tekenen onderaan het vakje
                     )
 
         if self.current_room == self.rooms[6]:
@@ -272,6 +272,19 @@ class Game:
         # # teken gemixt snoepje (als er een is)
         # if self.current_candy_sprite:
         #     self.current_candy_sprite.draw(self.screen)
+
+        mouse_position = pygame.mouse.get_pos()
+        hovering = False 
+
+        if self.current_room == self.rooms[6]:
+            for sprite in self.ingredient_sprites:
+                if sprite.rect.collidepoint(mouse_position):        # collidepoint kijkt : ligt dit punt binnen deze rechthoek?
+                    hovering = True
+       
+        
+        if hovering:
+            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+        
 
         pygame.display.flip()
 
