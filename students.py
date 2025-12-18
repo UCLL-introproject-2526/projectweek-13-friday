@@ -1,4 +1,5 @@
 import random
+from ingredient import candy_images
 #speed up the process of making students by randomizing a location that hasn't 
 #been used last time
 
@@ -14,14 +15,17 @@ class Student:
 
     def add_order(self):
         amount = random.randint(1,10)
-        with open("delivery_texts/recipes.txt", 'r', encoding= 'utf-8') as file:
-            recipe_list = file.readlines()
-            for line  in recipe_list:
-                name = line.strip().split(':')
-                self.favourite_sweets.append(name[0])
+        all_candies = list(candy_images.keys())
+        self.order["order"] = (random.choice(all_candies), amount)
+
+        # with open("delivery_texts/recipes.txt", 'r', encoding= 'utf-8') as file:
+        #     recipe_list = file.readlines()
+            # for line  in recipe_list:
+            #     name = line.strip().split(':')
+            #     self.favourite_sweets.append(name[0])
                 
               
-        self.order["order"] = random.choice(self.favourite_sweets), amount
+        # self.order["order"] = random.choice(self.favourite_sweets), amount
 
     def __repr__(self):
         if self.order["order"][1] > 1:

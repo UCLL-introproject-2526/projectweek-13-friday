@@ -42,11 +42,11 @@ class Transaction:
 bag = Inventory()
 p1 = Player("Super Senior", bag)
 
-drop = Candy_type("drop","black", "salty")
-bubblegum = Candy_type("bubblegum", "pink" ,"strawberry")
-napoleon = Candy_type("napoleon", "white", "sour")
-sourpatch = Candy_type("sourpatch", "mixed", "sour")
-cola_bottles = Candy_type("cola bottle", "brown", "cola")
+# drop = Candy_type("drop","black", "salty")
+# bubblegum = Candy_type("bubblegum", "pink" ,"strawberry")
+# napoleon = Candy_type("napoleon", "white", "sour")
+# sourpatch = Candy_type("sourpatch", "mixed", "sour")
+# cola_bottles = Candy_type("cola bottle", "brown", "cola")
 
 bag.add_to_inventory("drop", 100)
 bag.add_to_inventory("bubblegum", 100)
