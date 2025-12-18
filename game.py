@@ -9,7 +9,7 @@ from world.room import Room
 from world.playground import Playground
 from world.lab import Lab
 from ui.menu import Menu
-from world.battle_arena import BattleArena
+# from world.battle_arena import BattleArena
 
 class Game:
     def __init__(self):
@@ -33,7 +33,7 @@ class Game:
             "principal": Room("Principal Office", 1800),
             "playground": Playground(),
             "lab": Lab(),
-            "battle": BattleArena() # NIEUW!!! test subject for now..
+            # "battle": BattleArena() # NIEUW!!! test subject for now..
         }
         self.current_area = "hallway"   # spawnpoint (hallway for now.. meest logische)
 
@@ -77,12 +77,12 @@ class Game:
                 if event.type == pygame.QUIT:
                     self.running = False
 
-            # ---------------- TEST TRIGGER FOR BATTLE --------------
-            if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_b: # Druk op 'B' om te vechten
-                        print("Debug: Battle gestart!")
-                        self.start_fade("battle", 100)
-            # -------- NOT PERMANENT !!!! -------------------------
+            # # ---------------- TEST TRIGGER FOR BATTLE --------------
+            # if event.type == pygame.KEYDOWN:
+            #         if event.key == pygame.K_b: # Druk op 'B' om te vechten
+            #             print("Debug: Battle gestart!")
+            #             self.start_fade("battle", 100)
+            # # -------- NOT PERMANENT !!!! -------------------------
             
             self.screen.fill((0, 0, 0)) # menu fix: "wis het scherm aan begin van elke fix"
 
