@@ -129,9 +129,9 @@ candy_images = {
 
 # zichtbaar snoepje op scherm
 class CandySprite:
-    def __init__(self, candy_name):
+    def __init__(self, candy_name, pos):
         # self.image = pygame.image.load(candy_images[candy_name]).convert_alpha()
-        self.image = pygame.transform.scale(pygame.image.load(candy_images[candy_name]).convert_alpha())
+        self.image = pygame.transform.scale(pygame.image.load(candy_images[candy_name]).convert_alpha(), (82, 82))
         self.rect = self.image.get_rect(center=pos)
 
     def draw(self, screen):
