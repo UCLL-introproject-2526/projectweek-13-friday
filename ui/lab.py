@@ -10,6 +10,11 @@ def draw_lab_ui(self):
         pygame.draw.rect(self.screen, (50, 50, 50), inv_rect)
         pygame.draw.rect(self.screen, (255, 255, 255), inv_rect, 2)
 
+        # assigments border
+        inv_rect = pygame.Rect(1120, 10, 150, 70)
+        pygame.draw.rect(self.screen, (150, 150, 150), inv_rect)
+        pygame.draw.rect(self.screen, (255, 255, 255), inv_rect, 2)
+
         # slots
         inv_item1_rect = pygame.Rect(10, 10, 75, 75)  # (x, y, width, height)
         pygame.draw.rect(self.screen, (150, 150, 150), inv_item1_rect)  # donkergrijze box
