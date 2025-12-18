@@ -1,22 +1,28 @@
 from player_implementatie.player import Player_, Inventory, Candy_type
 from player_implementatie.students import Student
 import random
+from ui.prompt import *
+from world.room import *
 
 #make an order after an amount of time passes
 class Transaction:
-    def __init__(self):
-        self.location = self.set_spawn_location()
+    def __init__(self, selling_location, student):
+        self.buyer = Room.student_location[student]
+        self.rect = pygame.Rect(selling_location, 400, 10, 100)
+
+
+
         
 
 #assign spawnpoint
-    def set_spawn_location(self):
-        with open('delivery_texts/locations.txt', 'r', encoding= 'utf-8') as file:
-            rooms = file.readlines()
-            room_list = []
-            for room in rooms:
-                room_list.append(room.strip())
-            current_room = random.choice(room_list)
-        return current_room
+    # def set_spawn_location(self):
+    #     with open('delivery_texts/locations.txt', 'r', encoding= 'utf-8') as file:
+    #         rooms = file.readlines()
+    #         room_list = []
+    #         for room in rooms:
+    #             room_list.append(room.strip())
+    #         current_room = random.choice(room_list)
+    #     return current_room
     
  # interaction between player and student where inventory goes down and assignments get added     
     def delivery_transaction(self, player, student):
@@ -26,8 +32,7 @@ class Transaction:
     
         if player.current_inventory.has_candy(type) and quantity <= player.current_inventory.get_quantity(type):
             player.add_assignments(payment)
-            player.current_inventory.decrease_inventory(type, quantity)
-        print(f"There was a trade in {self.location}")    
+            player.current_inventory.decrease_inventory(type, quantity) 
         print(f"Current assignments: {player.current_assignments}")
         print(f"Current inventory: {player.current_inventory}")
 
@@ -39,19 +44,19 @@ class Transaction:
     #     pass
 #test
 #player info
-bag = Inventory()
-p1 = Player_("Super Senior", bag)
+# bag = Inventory()
+# p1 = Player_("Super Senior", bag)
 
-drop = Candy_type("drop","black", "salty")
-bubblegum = Candy_type("bubblegum", "pink" ,"strawberry")
-napoleon = Candy_type("napoleon", "white", "sour")
-sourpatch = Candy_type("sourpatch", "mixed", "sour")
-cola_bottles = Candy_type("cola bottle", "brown", "cola")
+# drop = Candy_type("drop","black", "salty")
+# bubblegum = Candy_type("bubblegum", "pink" ,"strawberry")
+# napoleon = Candy_type("napoleon", "white", "sour")
+# sourpatch = Candy_type("sourpatch", "mixed", "sour")
+# cola_bottles = Candy_type("cola bottle", "brown", "cola")
 
-bag.add_to_inventory("drop", 100)
-bag.add_to_inventory("bubblegum", 100)
-bag.add_to_inventory("sourpatch", 100)
-bag.add_to_inventory("cola bottle", 100)
+# bag.add_to_inventory("drop", 100)
+# bag.add_to_inventory("bubblegum", 100)
+# bag.add_to_inventory("sourpatch", 100)
+# bag.add_to_inventory("cola bottle", 100)
 
 
 #student info

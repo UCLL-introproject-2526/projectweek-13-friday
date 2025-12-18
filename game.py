@@ -51,16 +51,15 @@ class Game:
                 rooms.append(area)
 
         self.students = [
-            Student("Alice", (60, 255, 100)),
-            Student("Bob", (250, 230, 240)),
+
             Student("Student1", (66, 130, 240)),
-            # Student("student2", (203, 20, 240)),
-            # Student("student3",(255, 255, 255)),
-            # Student("Student4", (10, 255, 240)),
-            # Student("Student5", (200, 130, 10)),
-            # Student("student6,",(6, 130, 240)),
-            # Student("student7", (66, 106, 240)),
-            # Student("Student8", (66, 200, 20)),
+            Student("student2", (203, 20, 240)),
+            Student("student3",(255, 255, 255)),
+            Student("Student4", (10, 255, 240)),
+            Student("Student5", (200, 130, 10)),
+            Student("student6,",(6, 130, 240)),
+            Student("student7", (66, 106, 240)),
+            Student("Student8", (66, 200, 20)),
         ]
 
         for student in self.students:
