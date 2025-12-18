@@ -257,7 +257,8 @@ class Game:
                 # ingredient-logica
                 if self.current_area == "lab" and not self.fading:
                     self.handle_ingredient_clicks(events)
-                    draw_lab_ui(self)
+                
+                draw_lab_ui(self)
 
             pygame.display.flip()
 

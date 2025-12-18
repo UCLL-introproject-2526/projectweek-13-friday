@@ -3,11 +3,7 @@ from ingredients.ingredient import candy_images
 
 def draw_lab_ui(self):
     # Alleen tekenen als je in de lab bent
-    if self.current_area == "lab":
-        # Box achter ingredienten
-        box_rect = pygame.Rect(780, 130, 450, 300)
-        pygame.draw.rect(self.screen, (150, 150, 150), box_rect)  # donkergrijs
-        pygame.draw.rect(self.screen, (255, 255, 255), box_rect, 3)  # witte rand
+    
 
         # Inventory achtergrond
         inv_rect = pygame.Rect(10, 10, 675, 75)
@@ -51,6 +47,12 @@ def draw_lab_ui(self):
         pygame.draw.rect(self.screen, (150, 150, 150), inv_item9_rect)  # donkergrijze box
         pygame.draw.rect(self.screen, (255, 255, 255), inv_item9_rect, 2)  # optioneel witte rand
 
+        if self.current_area == "lab":
+            # Box achter ingredienten
+            box_rect = pygame.Rect(780, 130, 450, 300)
+            pygame.draw.rect(self.screen, (150, 150, 150), box_rect)  # donkergrijs
+            pygame.draw.rect(self.screen, (255, 255, 255), box_rect, 3)  # witte rand
+
         inventory_rects = [
     inv_item1_rect,
     inv_item2_rect,
@@ -90,8 +92,9 @@ def draw_lab_ui(self):
                     )
 
         # Teken alle ingredient sprites
-        for sprite in self.ingredient_sprites:
-            sprite.draw(self.screen)
+        if self.current_area == "lab":
+            for sprite in self.ingredient_sprites:
+                sprite.draw(self.screen)
 
         mouse_position = pygame.mouse.get_pos()
         hovering = False 
