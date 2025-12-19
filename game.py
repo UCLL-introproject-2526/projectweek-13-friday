@@ -62,6 +62,10 @@ class Game:
             Student("Student8", (66, 200, 20)),
         ]
 
+
+        for student in self.students:
+            student.add_order()
+
         for student in self.students:
             random.choice(rooms).students.append(student)
 
@@ -137,27 +141,30 @@ class Game:
             self.fading = False
 
     def handle_ingredient_clicks(self, events):
-        for event in events:
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_pos = pygame.mouse.get_pos()
-                for sprite in self.ingredient_sprites:
-                    if sprite.is_clicked(mouse_pos):
-                        candy = self.mixing_pot.add_ingredient(sprite.ingredient)
-                        if candy:
-                            
-                            # update inventory
-                            for slot in self.inventory_slots:
-                                if slot["name"] == candy:
-                                    slot["count"] += 1
-                                    return
+       for event in events:
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_pos = pygame.mouse.get_pos()
+            for sprite in self.ingredient_sprites:
+                if sprite.is_clicked(mouse_pos):
+                    candy = self.mixing_pot.add_ingredient(sprite.ingredient)
+                    if candy:
+                        # Update UI inventory slots
+                        for slot in self.inventory_slots:
+                            if slot["name"] == candy:
+                                slot["count"] += 1
+                                break
+                        else:  # No existing slot found
                             for slot in self.inventory_slots:
                                 if slot["name"] is None:
                                     slot["name"] = candy
                                     slot["count"] = 1
-                                    return
-                            self.player.current_inventory.add_to_inventory(candy, 1)
+                                    break
+                        
+                        # ALSO update the actual player inventory
+                        self.player_info.current_inventory.add_to_inventory(candy, 1)  # ADD THIS LINE
 
     def handle_assignments(self, events, player):
+        pass
         # als trade plaatsvindt dan moet counter assigment omhoog
         # event = trade 
 
@@ -166,19 +173,19 @@ class Game:
         # altijd player.self.current_assigments displayen
         # 
 
-
-        if player.current_assigments:
-        # update inventory
-        for slot in self.inventory_slots:
-            if slot["name"] == candy:
-                slot["count"] += 1
-                return
-        for slot in self.inventory_slots:
-            if slot["name"] is None:
-                slot["name"] = candy
-                slot["count"] = 1
-                return
-        self.player.current_inventory.add_to_inventory(candy, 1)
+#---------------- FIX THIS ___________---------------------
+        # player.current_assigments
+        # # update inventory
+        # for slot in self.inventory_slots:
+        #     if slot["name"] == candy:
+        #         slot["count"] += 1
+        #         return
+        # for slot in self.inventory_slots:
+        #     if slot["name"] is None:
+        #         slot["name"] = candy
+        #         slot["count"] = 1
+        #         return
+        # self.player.current_inventory.add_to_inventory(candy, 1)
 
 
 

@@ -1,12 +1,18 @@
 import pygame
 from ingredients.ingredient import candy_images
 
+
 def draw_lab_ui(self):
 
         # assigments border
         inv_rect = pygame.Rect(1120, 10, 150, 70)
         pygame.draw.rect(self.screen, (150, 150, 150), inv_rect)
         pygame.draw.rect(self.screen, (255, 255, 255), inv_rect, 2)
+
+        font = pygame.font.SysFont(None, 32)
+        assignments_text = font.render(f"Tests: {self.player_info.current_assignments}", True, (255, 255, 255))
+        text_rect = assignments_text.get_rect(center=inv_rect.center)
+        self.screen.blit(assignments_text, text_rect)
 
         # Inventory achtergrond
         inv_rect = pygame.Rect(10, 10, 675, 75)

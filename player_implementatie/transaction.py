@@ -6,23 +6,9 @@ from world.room import *
 
 #make an order after an amount of time passes
 class Transaction:
-    def __init__(self, selling_location, student):
-        self.buyer = Room.student_location[student]
+    def __init__(self, selling_location, student, room):
+        self.buyer = room.student_locations[student]
         self.rect = pygame.Rect(selling_location, 400, 10, 100)
-
-
-
-        
-
-#assign spawnpoint
-    # def set_spawn_location(self):
-    #     with open('delivery_texts/locations.txt', 'r', encoding= 'utf-8') as file:
-    #         rooms = file.readlines()
-    #         room_list = []
-    #         for room in rooms:
-    #             room_list.append(room.strip())
-    #         current_room = random.choice(room_list)
-    #     return current_room
     
  # interaction between player and student where inventory goes down and assignments get added     
     def delivery_transaction(self, player, student):
