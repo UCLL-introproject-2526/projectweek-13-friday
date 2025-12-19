@@ -14,6 +14,7 @@ from ui.main_screen import MainScreen
 from dialogue.intro import get_intro_lines
 from ui.dialogue_ui import DialogueUI
 from ui.settings_menu import SettingsMenu
+from ui.profile_menu import ProfileMenu
 
 pygame.init()
 
@@ -56,6 +57,7 @@ inventory_ui = InventoryUI(screen)
 loot_sys = LootSystem()
 dialogue_ui = DialogueUI(screen)
 settings_menu = SettingsMenu(screen)
+profile_menu = ProfileMenu(screen)
 
 # ----------------------------------
 # SYSTEM klaarzetten
@@ -169,7 +171,7 @@ while running:
             if clicked == 0:
                 inventory_ui.toggle()
             elif clicked == 1:
-                print("Profile clicked")
+                profile_menu.toggle()
             elif clicked == 2:
                 settings_menu.toggle()
 
@@ -189,6 +191,14 @@ while running:
         elif action == "menu":
             state = "MAIN"
             settings_menu.visible = False
+            
+        act = profile_menu.handle_event(event, player, config)
+        if act == "up_hp":
+            player.upgrade_hp()
+        elif act == "up_mana":
+            player.upgrade_mana()
+        elif act == "up_dmg":
+            player.upgrade_damage()
 
     # --------------------------------------------------
     # STATE: MAIN
@@ -248,8 +258,11 @@ while running:
     if any(r.collidepoint(mouse_pos) for r in menu_ui.rects):
         ui_block_input = True
 
-    # settings menu = pause (blok input)
-    paused = settings_menu.visible
+
+    # menus die pauzeren
+    paused = settings_menu.visible or profile_menu.visible
+
+    # als menu open is: input blokkeren
     if paused:
         ui_block_input = True
 
@@ -307,7 +320,8 @@ while running:
         for p in projectiles:
             for e in enemies:
                 if p.rect.colliderect(e.rect) and not getattr(e, "dead", False):
-                    e.take_damage(config.DAMAGE["book"])
+                    dmg = config.DAMAGE["book"] + getattr(player, "damage_bonus", 0)
+                    e.take_damage(dmg)
                     p.age = p.lifetime
 
         # loot
@@ -373,6 +387,7 @@ while running:
     menu_ui.draw()
     inventory_ui.draw(player, config)
     settings_menu.draw()
+    profile_menu.draw(player,config)
 
     if player.dead:
         text = font_big.render("YOU DIED", True, (255, 255, 255))
