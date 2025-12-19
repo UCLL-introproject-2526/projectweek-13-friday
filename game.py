@@ -53,13 +53,13 @@ class Game:
         self.students = [
 
             Student("Student1", (66, 130, 240)),
-            Student("student2", (203, 20, 240)),
-            Student("student3",(255, 255, 255)),
-            Student("Student4", (10, 255, 240)),
-            Student("Student5", (200, 130, 10)),
-            Student("student6,",(6, 130, 240)),
-            Student("student7", (66, 106, 240)),
-            Student("Student8", (66, 200, 20)),
+            # Student("student2", (203, 20, 240)),
+            # Student("student3",(255, 255, 255)),
+            # Student("Student4", (10, 255, 240)),
+            # Student("Student5", (200, 130, 10)),
+            # Student("student6,",(6, 130, 240)),
+            # Student("student7", (66, 106, 240)),
+            # Student("Student8", (66, 200, 20)),
         ]
 
 
@@ -160,32 +160,32 @@ class Game:
                                     slot["count"] = 1
                                     break
                         
-                        # ALSO update the actual player inventory
+                        # update the actual player inventory and not only the ui
                         self.player_info.current_inventory.add_to_inventory(candy, 1)  # ADD THIS LINE
 
-    def handle_assignments(self, events, player):
-        pass
-        # als trade plaatsvindt dan moet counter assigment omhoog
-        # event = trade 
+#     def handle_assignments(self, events, player):
+#         pass
+#         # als trade plaatsvindt dan moet counter assigment omhoog
+#         # event = trade 
 
-        # een trade wordt gemaakt , we hebben da nummer nodig, 
-        # nummer.payment wordt gebruikt als counter += 1
-        # altijd player.self.current_assigments displayen
-        # 
+#         # een trade wordt gemaakt , we hebben da nummer nodig, 
+#         # nummer.payment wordt gebruikt als counter += 1
+#         # altijd player.self.current_assigments displayen
+#         # 
 
-#---------------- FIX THIS ___________---------------------
-        # player.current_assigments
-        # # update inventory
-        # for slot in self.inventory_slots:
-        #     if slot["name"] == candy:
-        #         slot["count"] += 1
-        #         return
-        # for slot in self.inventory_slots:
-        #     if slot["name"] is None:
-        #         slot["name"] = candy
-        #         slot["count"] = 1
-        #         return
-        # self.player.current_inventory.add_to_inventory(candy, 1)
+# #---------------- FIX THIS ___________--------------------- fixed => used the wrong self.player, needed self.player_info
+#         # player.current_assigments
+#         # # update inventory
+#         # for slot in self.inventory_slots:
+#         #     if slot["name"] == candy:
+#         #         slot["count"] += 1
+#         #         return
+#         # for slot in self.inventory_slots:
+#         #     if slot["name"] is None:
+#         #         slot["name"] = candy
+#         #         slot["count"] = 1
+#         #         return
+#         # self.player.current_inventory.add_to_inventory(candy, 1)
 
 
 

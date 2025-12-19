@@ -12,6 +12,7 @@ class Room:
         self.students = []
         self.student_to_draw = []
         self.student_locations = {}
+        self.served_students = []
 
     # def students_in_rooms(self):
     #     student1 = Student("Student1")
@@ -51,13 +52,15 @@ class Room:
                     quantity = self.nearby_student.order["order"][1]
                     
                     # Check if player has enough candy
-                    if game.player_info.current_inventory.has_candy(candy_type) and \
-                    quantity <= game.player_info.current_inventory.get_quantity(candy_type):
+                    if game.player_info.current_inventory.has_candy(candy_type) and quantity <= game.player_info.current_inventory.get_quantity(candy_type):
                         
                         # Perform the transaction
                         payment = quantity * 2
                         game.player_info.add_assignments(payment)
-                        game.player_info.current_inventory.decrease_inventory(candy_type, quantity)
+                        game.player_info.current_inventory.decrease_inventory(candy_type, quantity) 
+                        self.served_students.append(self.nearby_student)  # Mark as served
+                        self.nearby_student = None
+                        print("✅ Student served!")                       
                         
                         # UPDATE THE UI SLOTS - ADD THIS:
                         for slot in game.inventory_slots:
@@ -67,6 +70,12 @@ class Room:
                                     slot["name"] = None
                                     slot["count"] = 0
                                 break
+
+                        #print(f"Trying to remove: {self.nearby_student.name}")
+                        print(f"Students to draw: {[s.name for s in self.students_to_draw]}")
+                        print(f"Is student in list? {self.nearby_student in self.students_to_draw}")
+
+
                         
                         print(f"✅ Delivery successful! +{payment} assignments")
                         print(f"Current assignments: {game.player_info.current_assignments}")
@@ -99,14 +108,19 @@ class Room:
         # students_to_draw = random.sample(self.students, n_to_draw)
 
         x = 50
-        y = 500
+        y = 520
+
 
         self.student_locations = {}
         for student in self.students_to_draw:
-            self.student_locations[student] = x
-            rect = pygame.Rect(x , y ,50,50)
-            pygame.draw.rect(screen, student.color, rect)
-            x = x + 400
+            if student not in self.served_students:
+                self.student_locations[student] = x
+                # rect = pygame.Rect(x , y ,50,50)
+                # pygame.draw.rect(screen, student.color, rect)
+                student_image = pygame.image.load("Characters/test_dummy.png").convert_alpha()
+                student_image = pygame.transform.scale(student_image, (75, 90))  # Resize to fit
+                screen.blit(student_image, (x, y))
+                x = x + 400
         
 
         # print(f"Students to draw: {len(self.students_to_draw)}")

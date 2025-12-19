@@ -15,7 +15,7 @@ class Student:
 #check if it can acces the recipe file -> it's in a folder
 
     def add_order(self):
-        amount = random.randint(1,10)
+        amount = random.randint(1,5)
         all_candies = list(candy_images.keys())
         self.order["order"] = (random.choice(all_candies), amount)
 
